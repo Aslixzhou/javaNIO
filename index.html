@@ -1,0 +1,1578 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>javaNIO</title><link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:first-child { margin-top: -20px; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px !important; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  @page { margin: 20mm 0px; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow-y: hidden; overflow-x: auto; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; word-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { word-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+:root { --side-bar-bg-color: #fafafa; --control-text-color: #777; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, "Segoe UI Emoji", sans-serif; color: rgb(0, 64, 80); line-height: 1.6; }
+#write { max-width: 860px; margin: 0px auto; padding: 30px 30px 100px; }
+@media only screen and (min-width: 1400px) {
+  #write { max-width: 1024px; }
+}
+@media only screen and (min-width: 1800px) {
+  #write { max-width: 1200px; }
+}
+#write > ul:first-child, #write > ol:first-child { margin-top: 30px; }
+a { color: rgb(65, 131, 196); }
+h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; }
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor { text-decoration: none; }
+h1 tt, h1 code { font-size: inherit; }
+h2 tt, h2 code { font-size: inherit; }
+h3 tt, h3 code { font-size: inherit; }
+h4 tt, h4 code { font-size: inherit; }
+h5 tt, h5 code { font-size: inherit; }
+h6 tt, h6 code { font-size: inherit; }
+h1 { font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 238, 238); }
+h2 { font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 238, 238); }
+h3 { font-size: 1.5em; line-height: 1.43; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1em; }
+h6 { font-size: 1em; color: rgb(119, 119, 119); }
+p, blockquote, ul, ol, dl, table { margin: 0.8em 0px; }
+li > ol, li > ul { margin: 0px; }
+hr { height: 2px; padding: 0px; margin: 16px 0px; background-color: rgb(231, 231, 231); border: 0px none; overflow: hidden; box-sizing: content-box; }
+li p.first { display: inline-block; }
+ul, ol { padding-left: 30px; }
+ul:first-child, ol:first-child { margin-top: 0px; }
+ul:last-child, ol:last-child { margin-bottom: 0px; }
+blockquote { border-left: 5px solid rgb(66, 185, 131); padding: 8px 15px; color: rgb(33, 93, 66); background-color: rgb(243, 245, 247); }
+blockquote blockquote { padding-right: 0px; }
+table { padding: 0px; word-break: initial; }
+table tr { border: 1px solid rgb(223, 226, 229); margin: 0px; padding: 0px; }
+table tr:nth-child(2n), thead { background-color: rgb(248, 248, 248); }
+table th { font-weight: bold; border-width: 1px 1px 0px; border-top-style: solid; border-right-style: solid; border-left-style: solid; border-top-color: rgb(223, 226, 229); border-right-color: rgb(223, 226, 229); border-left-color: rgb(223, 226, 229); border-image: initial; border-bottom-style: initial; border-bottom-color: initial; margin: 0px; padding: 6px 13px; }
+table td { border: 1px solid rgb(223, 226, 229); margin: 0px; padding: 6px 13px; }
+table th:first-child, table td:first-child { margin-top: 0px; }
+table th:last-child, table td:last-child { margin-bottom: 0px; }
+.CodeMirror-lines { padding-left: 4px; }
+.code-tooltip { box-shadow: rgba(0, 28, 36, 0.3) 0px 1px 1px 0px; border-top: 1px solid rgb(238, 242, 242); }
+.md-fences, code, tt { border: 1px solid rgb(231, 234, 237); background-color: rgb(248, 248, 248); border-radius: 3px; padding: 2px 4px 0px; font-size: 0.9em; }
+code { background-color: rgb(243, 244, 244); padding: 2px; color: rgb(209, 37, 115); }
+.md-fences { margin-bottom: 15px; margin-top: 15px; padding-top: 8px; padding-bottom: 6px; }
+.md-task-list-item > input { margin-left: -1.3em; }
+@media print {
+  html { font-size: 13px; }
+  table, pre { break-inside: avoid; }
+  pre { word-wrap: break-word; }
+}
+.md-fences { background-color: rgb(248, 248, 248); }
+#write pre.md-meta-block { padding: 1rem; font-size: 85%; line-height: 1.45; background-color: rgb(247, 247, 247); border: 0px; border-radius: 3px; color: rgb(119, 119, 119); margin-top: 0px !important; }
+.mathjax-block > .code-tooltip { bottom: 0.375rem; }
+.md-mathjax-midline { background: rgb(250, 250, 250); }
+#write > h3.md-focus::before { left: -1.5625rem; top: 0.375rem; }
+#write > h4.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h5.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h6.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+.md-image > .md-meta { border-radius: 3px; padding: 2px 0px 0px 4px; font-size: 0.9em; color: inherit; }
+.md-tag { color: rgb(167, 167, 167); opacity: 1; }
+.md-toc { margin-top: 20px; padding-bottom: 20px; }
+.sidebar-tabs { border-bottom: none; }
+#typora-quick-open { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); }
+#typora-quick-open-item { background-color: rgb(250, 250, 250); border-color: rgb(254, 254, 254) rgb(229, 229, 229) rgb(229, 229, 229) rgb(238, 238, 238); border-style: solid; border-width: 1px; }
+.on-focus-mode blockquote { border-left-color: rgba(85, 85, 85, 0.12); }
+header, .context-menu, .megamenu-content, footer { font-family: "Segoe UI", Arial, sans-serif; }
+.file-node-content:hover .file-node-icon, .file-node-content:hover .file-node-open-state { visibility: visible; }
+.mac-seamless-mode #typora-sidebar { background-color: var(--side-bar-bg-color); }
+.md-lang { color: rgb(180, 101, 77); }
+#md-notification .btn { border: 0px; }
+.dropdown-menu .divider { border-color: rgb(229, 229, 229); opacity: 0.4; }
+.ty-preferences .window-content { background-color: rgb(250, 250, 250); }
+.ty-preferences .nav-group-item.active { color: white; background: rgb(153, 153, 153); }
+.menu-item-container a.menu-style-btn { background-color: rgb(245, 248, 250); background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)); }
+#write mark { background: transparent; color: rgb(216, 105, 105); font-weight: bold; }
+p .md-image:only-child { width: auto; text-align: left; }
+
+
+.cm-s-inner { background-color: rgb(38, 50, 56); color: rgb(233, 237, 237); }
+.cm-s-inner .CodeMirror-gutters { background: rgb(38, 50, 56); color: rgb(83, 127, 126); border: none; }
+.cm-s-inner .CodeMirror-guttermarker, .cm-s-inner .CodeMirror-guttermarker-subtle, .cm-s-inner .CodeMirror-linenumber { color: rgb(83, 127, 126); }
+.cm-s-inner .CodeMirror-cursor { border-left: 1px solid rgb(248, 248, 240); }
+.cm-s-inner div.CodeMirror-selected { background: rgba(255, 255, 255, 0.15); }
+.cm-s-inner.CodeMirror-focused div.CodeMirror-selected { background: rgba(255, 255, 255, 0.1); }
+.cm-s-inner .CodeMirror-line::selection, .cm-s-inner .CodeMirror-line > span::selection, .cm-s-inner .CodeMirror-line > span > span::selection { background: rgba(255, 255, 255, 0.1); }
+.cm-s-inner .CodeMirror-activeline-background { background: rgba(0, 0, 0, 0); }
+.cm-s-inner .cm-keyword { color: rgb(199, 146, 234); }
+.cm-s-inner .cm-operator { color: rgb(233, 237, 237); }
+.cm-s-inner .cm-variable-2 { color: rgb(128, 203, 196); }
+.cm-s-inner .cm-variable-3 { color: rgb(158, 255, 255); }
+.cm-s-inner .cm-builtin { color: rgb(222, 203, 107); }
+.cm-s-inner .cm-atom { color: rgb(247, 118, 105); }
+.cm-s-inner .cm-number { color: rgb(247, 118, 105); }
+.cm-s-inner .cm-def { color: rgb(233, 237, 237); }
+.cm-s-inner .cm-string { color: rgb(195, 232, 141); }
+.cm-s-inner .cm-string-2 { color: rgb(128, 203, 196); }
+.cm-s-inner .cm-comment { color: rgb(84, 110, 122); }
+.cm-s-inner .cm-variable { color: rgb(158, 255, 255); }
+.cm-s-inner .cm-tag { color: rgb(128, 203, 196); }
+.cm-s-inner .cm-meta { color: rgb(128, 203, 196); }
+.cm-s-inner .cm-attribute { color: rgb(255, 203, 107); }
+.cm-s-inner .cm-property { color: rgb(128, 203, 174); }
+.cm-s-inner .cm-qualifier { color: rgb(222, 203, 107); }
+.cm-s-inner .cm-variable-3 { color: rgb(222, 203, 107); }
+.cm-s-inner .cm-tag { color: rgb(255, 83, 112); }
+.cm-s-inner .cm-error { color: rgb(255, 255, 255); background-color: rgb(236, 95, 103); }
+.cm-s-inner .CodeMirror-matchingbracket { text-decoration: underline; color: white !important; }
+.md-fences { background-color: rgb(38, 50, 56); color: rgb(233, 237, 237); border: none; }
+.md-fences .code-tooltip { background-color: rgb(38, 50, 56); }
+
+
+
+
+</style>
+</head>
+<body class='typora-export os-windows' >
+<div  id='write'  class = 'is-node first-line-indent'><h1><a name='header-n0' class='md-header-anchor '></a>Java NIO编程</h1><blockquote><p>Author：Zhry</p><p>Email：<a href='mailto:2553179694@qq.com' target='_blank' class='url'>2553179694@qq.com</a></p><p>Version：0.0.01</p></blockquote><div class='md-toc' mdtype='toc'><p class="md-toc-content"><span class="md-toc-item md-toc-h1" data-ref="n0"><a class="md-toc-inner" href="#header-n0">Java NIO编程</a></span><span class="md-toc-item md-toc-h2" data-ref="n8"><a class="md-toc-inner" href="#header-n8">1. NIO概述</a></span><span class="md-toc-item md-toc-h3" data-ref="n9"><a class="md-toc-inner" href="#header-n9">1.1 IO概述</a></span><span class="md-toc-item md-toc-h3" data-ref="n15"><a class="md-toc-inner" href="#header-n15">1.2 阻塞IO（BIO）</a></span><span class="md-toc-item md-toc-h3" data-ref="n21"><a class="md-toc-inner" href="#header-n21">1.3 非阻塞IO（NIO）</a></span><span class="md-toc-item md-toc-h3" data-ref="n28"><a class="md-toc-inner" href="#header-n28">1.4 异步非阻塞IO（AIO）</a></span><span class="md-toc-item md-toc-h3" data-ref="n32"><a class="md-toc-inner" href="#header-n32">1.5 NIO概述</a></span><span class="md-toc-item md-toc-h4" data-ref="n43"><a class="md-toc-inner" href="#header-n43">1.5.1 Channel</a></span><span class="md-toc-item md-toc-h4" data-ref="n46"><a class="md-toc-inner" href="#header-n46">1.5.2 Buffer</a></span><span class="md-toc-item md-toc-h4" data-ref="n49"><a class="md-toc-inner" href="#header-n49">1.5.3 Selector</a></span><span class="md-toc-item md-toc-h3" data-ref="n52"><a class="md-toc-inner" href="#header-n52">1.5.4 Channel Buffer Selector 三者关系</a></span><span class="md-toc-item md-toc-h2" data-ref="n59"><a class="md-toc-inner" href="#header-n59">2. Channel</a></span><span class="md-toc-item md-toc-h3" data-ref="n60"><a class="md-toc-inner" href="#header-n60">2.1 概述</a></span><span class="md-toc-item md-toc-h3" data-ref="n70"><a class="md-toc-inner" href="#header-n70">2.2 Channel实现</a></span><span class="md-toc-item md-toc-h3" data-ref="n84"><a class="md-toc-inner" href="#header-n84">2.3 FileChannel示例</a></span><span class="md-toc-item md-toc-h4" data-ref="n88"><a class="md-toc-inner" href="#header-n88">2.3.1 打开FileChannel</a></span><span class="md-toc-item md-toc-h4" data-ref="n92"><a class="md-toc-inner" href="#header-n92">2.3.2 从FileChannel读取数据</a></span><span class="md-toc-item md-toc-h4" data-ref="n98"><a class="md-toc-inner" href="#header-n98">2.3.3 向FileChannel写入数据</a></span><span class="md-toc-item md-toc-h4" data-ref="n103"><a class="md-toc-inner" href="#header-n103">2.3.4 关闭FileChannel</a></span><span class="md-toc-item md-toc-h4" data-ref="n106"><a class="md-toc-inner" href="#header-n106">2.3.5 FileChannel的position方法</a></span><span class="md-toc-item md-toc-h4" data-ref="n114"><a class="md-toc-inner" href="#header-n114">2.3.6 FileChannel的size方法</a></span><span class="md-toc-item md-toc-h4" data-ref="n117"><a class="md-toc-inner" href="#header-n117">2.3.7 FileChannel的truncate方法</a></span><span class="md-toc-item md-toc-h4" data-ref="n122"><a class="md-toc-inner" href="#header-n122">2.3.8 FileChannel的force方法</a></span><span class="md-toc-item md-toc-h4" data-ref="n126"><a class="md-toc-inner" href="#header-n126">2.3.9 FileChannel的transferTo和transferFrom方法</a></span><span class="md-toc-item md-toc-h3" data-ref="n142"><a class="md-toc-inner" href="#header-n142">2.4 Scatter/Gather</a></span><span class="md-toc-item md-toc-h4" data-ref="n148"><a class="md-toc-inner" href="#header-n148">2.4.1 Scattering Reads</a></span><span class="md-toc-item md-toc-h4" data-ref="n155"><a class="md-toc-inner" href="#header-n155">2.4.2 Gathering Writes</a></span><span class="md-toc-item md-toc-h2" data-ref="n161"><a class="md-toc-inner" href="#header-n161">3. SocketChannel</a></span><span class="md-toc-item md-toc-h3" data-ref="n166"><a class="md-toc-inner" href="#header-n166">3.1 ServerSocketChannel</a></span><span class="md-toc-item md-toc-h4" data-ref="n173"><a class="md-toc-inner" href="#header-n173">3.1.1 打开ServerSocketChannel</a></span><span class="md-toc-item md-toc-h4" data-ref="n176"><a class="md-toc-inner" href="#header-n176">3.1.2 关闭ServerSocketChannel</a></span><span class="md-toc-item md-toc-h4" data-ref="n179"><a class="md-toc-inner" href="#header-n179">3.1.3 监听新的连接</a></span><span class="md-toc-item md-toc-h4" data-ref="n183"><a class="md-toc-inner" href="#header-n183">3.1.4 阻塞模式</a></span><span class="md-toc-item md-toc-h4" data-ref="n185"><a class="md-toc-inner" href="#header-n185">3.1.5 非阻塞模式</a></span><span class="md-toc-item md-toc-h3" data-ref="n189"><a class="md-toc-inner" href="#header-n189">3.2 SocketChannel</a></span><span class="md-toc-item md-toc-h4" data-ref="n190"><a class="md-toc-inner" href="#header-n190">3.2.1 SocketChannel介绍</a></span><span class="md-toc-item md-toc-h4" data-ref="n199"><a class="md-toc-inner" href="#header-n199">3.2.2 SocketChannel特征</a></span><span class="md-toc-item md-toc-h4" data-ref="n213"><a class="md-toc-inner" href="#header-n213">3.2.3 SocketChannel使用</a></span><span class="md-toc-item md-toc-h5" data-ref="n214"><a class="md-toc-inner" href="#header-n214">3.2.3.1 创建SocketChannel</a></span><span class="md-toc-item md-toc-h5" data-ref="n223"><a class="md-toc-inner" href="#header-n223">3.2.3.2 连接校验</a></span><span class="md-toc-item md-toc-h5" data-ref="n225"><a class="md-toc-inner" href="#header-n225">3.2.3.3 读写模式</a></span><span class="md-toc-item md-toc-h5" data-ref="n229"><a class="md-toc-inner" href="#header-n229">3.2.3.4 读写</a></span><span class="md-toc-item md-toc-h5" data-ref="n234"><a class="md-toc-inner" href="#header-n234">3.2.3.5 设置和获取参数</a></span><span class="md-toc-item md-toc-h3" data-ref="n241"><a class="md-toc-inner" href="#header-n241">3.3 DatagramChannel</a></span><span class="md-toc-item md-toc-h4" data-ref="n247"><a class="md-toc-inner" href="#header-n247">3.3.1 打开DatagramChannel</a></span><span class="md-toc-item md-toc-h4" data-ref="n250"><a class="md-toc-inner" href="#header-n250">3.3.2 接收数据</a></span><span class="md-toc-item md-toc-h4" data-ref="n254"><a class="md-toc-inner" href="#header-n254">3.3.3 发送数据</a></span><span class="md-toc-item md-toc-h4" data-ref="n257"><a class="md-toc-inner" href="#header-n257">3.3.4 连接</a></span><span class="md-toc-item md-toc-h4" data-ref="n262"><a class="md-toc-inner" href="#header-n262">3.3.5 DatagramChannel示例</a></span><span class="md-toc-item md-toc-h2" data-ref="n266"><a class="md-toc-inner" href="#header-n266">4. Buffer</a></span><span class="md-toc-item md-toc-h3" data-ref="n267"><a class="md-toc-inner" href="#header-n267">4.1 Buffer简介</a></span><span class="md-toc-item md-toc-h3" data-ref="n274"><a class="md-toc-inner" href="#header-n274">4.2 Buffer基本使用</a></span><span class="md-toc-item md-toc-h3" data-ref="n282"><a class="md-toc-inner" href="#header-n282">4.3 Buffer的capacity、position和limit方法</a></span><span class="md-toc-item md-toc-h3" data-ref="n300"><a class="md-toc-inner" href="#header-n300">4.4 Buffer的类型</a></span><span class="md-toc-item md-toc-h3" data-ref="n319"><a class="md-toc-inner" href="#header-n319">4.5 Buffer分配和写数据</a></span><span class="md-toc-item md-toc-h4" data-ref="n320"><a class="md-toc-inner" href="#header-n320">4.5.1 Buffer分配</a></span><span class="md-toc-item md-toc-h4" data-ref="n327"><a class="md-toc-inner" href="#header-n327">4.5.2 向Buffer中写数据</a></span><span class="md-toc-item md-toc-h4" data-ref="n338"><a class="md-toc-inner" href="#header-n338">4.5.3 filp()方法</a></span><span class="md-toc-item md-toc-h3" data-ref="n341"><a class="md-toc-inner" href="#header-n341">4.6 从Buffer中读数据</a></span><span class="md-toc-item md-toc-h3" data-ref="n353"><a class="md-toc-inner" href="#header-n353">4.7 Buffer的几个方法</a></span><span class="md-toc-item md-toc-h4" data-ref="n354"><a class="md-toc-inner" href="#header-n354">4.7.1 rewind()方法</a></span><span class="md-toc-item md-toc-h4" data-ref="n357"><a class="md-toc-inner" href="#header-n357">4.7.2 clear()和compact()方法</a></span><span class="md-toc-item md-toc-h4" data-ref="n364"><a class="md-toc-inner" href="#header-n364">4.7.3 mark()和reset()方法</a></span><span class="md-toc-item md-toc-h3" data-ref="n368"><a class="md-toc-inner" href="#header-n368">4.8 缓冲区操作</a></span><span class="md-toc-item md-toc-h4" data-ref="n369"><a class="md-toc-inner" href="#header-n369">4.8.1 缓冲区分片</a></span><span class="md-toc-item md-toc-h4" data-ref="n373"><a class="md-toc-inner" href="#header-n373">4.8.2 只读缓冲区</a></span><span class="md-toc-item md-toc-h4" data-ref="n377"><a class="md-toc-inner" href="#header-n377">4.8.3 直接缓冲区</a></span><span class="md-toc-item md-toc-h4" data-ref="n382"><a class="md-toc-inner" href="#header-n382">4.8.4 内存映射文件I/O</a></span><span class="md-toc-item md-toc-h2" data-ref="n389"><a class="md-toc-inner" href="#header-n389">5. Selector</a></span><span class="md-toc-item md-toc-h3" data-ref="n390"><a class="md-toc-inner" href="#header-n390">5.1 Selector简介</a></span><span class="md-toc-item md-toc-h4" data-ref="n391"><a class="md-toc-inner" href="#header-n391">5.1.1 Selector和Channel关系</a></span><span class="md-toc-item md-toc-h4" data-ref="n397"><a class="md-toc-inner" href="#header-n397">5.1.2 可选择通道（SelectableChannel）</a></span><span class="md-toc-item md-toc-h4" data-ref="n403"><a class="md-toc-inner" href="#header-n403">5.1.3 Channel注册到Selector</a></span><span class="md-toc-item md-toc-h4" data-ref="n419"><a class="md-toc-inner" href="#header-n419">5.1.4 选择键（SlectionKey）</a></span><span class="md-toc-item md-toc-h3" data-ref="n425"><a class="md-toc-inner" href="#header-n425">5.2 Selector的使用方法</a></span><span class="md-toc-item md-toc-h4" data-ref="n427"><a class="md-toc-inner" href="#header-n427">5.2.1 Selector的创建</a></span><span class="md-toc-item md-toc-h4" data-ref="n430"><a class="md-toc-inner" href="#header-n430">5.2.2 注册Channel到Selector</a></span><span class="md-toc-item md-toc-h4" data-ref="n448"><a class="md-toc-inner" href="#header-n448">5.2.3 轮询查询就绪操作</a></span><span class="md-toc-item md-toc-h4" data-ref="n461"><a class="md-toc-inner" href="#header-n461">5.3.4 停止选择的方法</a></span><span class="md-toc-item md-toc-h3" data-ref="n467"><a class="md-toc-inner" href="#header-n467">5.3 NIO编程步骤</a></span><span class="md-toc-item md-toc-h3" data-ref="n469"><a class="md-toc-inner" href="#header-n469">5.4 示例代码</a></span><span class="md-toc-item md-toc-h2" data-ref="n473"><a class="md-toc-inner" href="#header-n473">6. Pipe和FileLock</a></span><span class="md-toc-item md-toc-h3" data-ref="n474"><a class="md-toc-inner" href="#header-n474">6.1 Pipe</a></span><span class="md-toc-item md-toc-h4" data-ref="n478"><a class="md-toc-inner" href="#header-n478">6.1.1 创建管道</a></span><span class="md-toc-item md-toc-h4" data-ref="n481"><a class="md-toc-inner" href="#header-n481">6.1.2 写入管道</a></span><span class="md-toc-item md-toc-h4" data-ref="n486"><a class="md-toc-inner" href="#header-n486">6.1.3 从管道读取数据</a></span><span class="md-toc-item md-toc-h4" data-ref="n493"><a class="md-toc-inner" href="#header-n493">6.1.4 示例</a></span><span class="md-toc-item md-toc-h3" data-ref="n495"><a class="md-toc-inner" href="#header-n495">6.2 FileLock</a></span><span class="md-toc-item md-toc-h4" data-ref="n496"><a class="md-toc-inner" href="#header-n496">6.2.1 FileLock简介</a></span><span class="md-toc-item md-toc-h4" data-ref="n502"><a class="md-toc-inner" href="#header-n502">6.2.2 文件锁分类</a></span><span class="md-toc-item md-toc-h4" data-ref="n506"><a class="md-toc-inner" href="#header-n506">6.2.3 使用示例</a></span><span class="md-toc-item md-toc-h4" data-ref="n509"><a class="md-toc-inner" href="#header-n509">6.2.4 获取文件锁的方法</a></span><span class="md-toc-item md-toc-h4" data-ref="n517"><a class="md-toc-inner" href="#header-n517">6.2.5 lock与trylock的区别</a></span><span class="md-toc-item md-toc-h4" data-ref="n521"><a class="md-toc-inner" href="#header-n521">6.2.6 FileLock的两个方法</a></span><span class="md-toc-item md-toc-h4" data-ref="n525"><a class="md-toc-inner" href="#header-n525">6.2.7 完整示例</a></span><span class="md-toc-item md-toc-h2" data-ref="n527"><a class="md-toc-inner" href="#header-n527">7. 其他</a></span><span class="md-toc-item md-toc-h3" data-ref="n528"><a class="md-toc-inner" href="#header-n528">7.1 Path</a></span><span class="md-toc-item md-toc-h4" data-ref="n529"><a class="md-toc-inner" href="#header-n529">7.1.1 Path简介</a></span><span class="md-toc-item md-toc-h4" data-ref="n534"><a class="md-toc-inner" href="#header-n534">7.1.2 创建Path实例</a></span><span class="md-toc-item md-toc-h4" data-ref="n540"><a class="md-toc-inner" href="#header-n540">7.1.3 创建绝对路径</a></span><span class="md-toc-item md-toc-h4" data-ref="n548"><a class="md-toc-inner" href="#header-n548">7.1.4 创建相对路径</a></span><span class="md-toc-item md-toc-h4" data-ref="n553"><a class="md-toc-inner" href="#header-n553">7.1.5 Path.normalize()</a></span><span class="md-toc-item md-toc-h3" data-ref="n557"><a class="md-toc-inner" href="#header-n557">7.2 Files</a></span><span class="md-toc-item md-toc-h4" data-ref="n562"><a class="md-toc-inner" href="#header-n562">7.2.1 Files.createDirectory()</a></span><span class="md-toc-item md-toc-h4" data-ref="n568"><a class="md-toc-inner" href="#header-n568">7.2.2 Files.copy()</a></span><span class="md-toc-item md-toc-h4" data-ref="n577"><a class="md-toc-inner" href="#header-n577">7.2.3 Files.move()</a></span><span class="md-toc-item md-toc-h4" data-ref="n581"><a class="md-toc-inner" href="#header-n581">7.2.4 Files.delete()</a></span><span class="md-toc-item md-toc-h4" data-ref="n586"><a class="md-toc-inner" href="#header-n586">7.2.5 Files.walkFileTree()</a></span><span class="md-toc-item md-toc-h3" data-ref="n598"><a class="md-toc-inner" href="#header-n598">7.3 AsynchronousFileChannel</a></span><span class="md-toc-item md-toc-h4" data-ref="n601"><a class="md-toc-inner" href="#header-n601">7.3.1 创建AsynchronousFileChannel</a></span><span class="md-toc-item md-toc-h4" data-ref="n606"><a class="md-toc-inner" href="#header-n606">7.3.2 通过Future读取数据</a></span><span class="md-toc-item md-toc-h4" data-ref="n615"><a class="md-toc-inner" href="#header-n615">7.3.3 通过CompletionHandler读取数据</a></span><span class="md-toc-item md-toc-h4" data-ref="n622"><a class="md-toc-inner" href="#header-n622">7.3.4 通过Future写入数据</a></span><span class="md-toc-item md-toc-h4" data-ref="n628"><a class="md-toc-inner" href="#header-n628">7.3.5 通过CompletionHander写入数据</a></span><span class="md-toc-item md-toc-h3" data-ref="n631"><a class="md-toc-inner" href="#header-n631">7.4 字符集（Charset）</a></span><span class="md-toc-item md-toc-h2" data-ref="n655"><a class="md-toc-inner" href="#header-n655">8. NIO综合案例（多人聊天室功能）</a></span><span class="md-toc-item md-toc-h3" data-ref="n656"><a class="md-toc-inner" href="#header-n656">8.1 服务端代码</a></span><span class="md-toc-item md-toc-h3" data-ref="n659"><a class="md-toc-inner" href="#header-n659">8.2 客户端代码</a></span><span class="md-toc-item md-toc-h4" data-ref="n660"><a class="md-toc-inner" href="#header-n660">8.2.1 ChatClient类</a></span><span class="md-toc-item md-toc-h4" data-ref="n662"><a class="md-toc-inner" href="#header-n662">8.2.2 ClientThread类</a></span><span class="md-toc-item md-toc-h2" data-ref="n665"><a class="md-toc-inner" href="#header-n665">9. 后会有期</a></span></p></div><p><img src='https://img-blog.csdnimg.cn/4b8733d5270d4c04a3d8994f8dd278de.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><h2><a name='header-n8' class='md-header-anchor '></a>1. NIO概述</h2><h3><a name='header-n9' class='md-header-anchor '></a>1.1 IO概述</h3><blockquote><p>IO 的操作方式通常分为几种：同步阻塞 BIO、同步非阻塞 NIO、异步非阻塞 AIO。</p><p>（1）在 JDK1.4 之前，我们建立网络连接的时候采用的是 BIO 模式。</p><p>（2）Java NIO（New IO 或 Non Blocking IO）是从 Java 1.4 版本开始引入的一个新的
+IO API，可以替代标准的 Java IO API。NIO 支持面向缓冲区的、基于通道的 IO 操作。
+NIO 将以更加高效的方式进行文件的读写操作。BIO 与 NIO 一个比较重要的不同是，
+我们使用 BIO 的时候往往会引入多线程，每个连接对应一个单独的线程；而 NIO 则是
+使用单线程或者只使用少量的多线程，让连接共用一个线程。</p><p>（3）AIO 也就是 NIO 2，在 Java 7 中引入了 NIO 的改进版 NIO 2,它是异步非阻塞的
+IO 模型。
+下面我们来详细介绍这几种 IO 方式</p></blockquote><h3><a name='header-n15' class='md-header-anchor '></a>1.2 阻塞IO（BIO）</h3><blockquote><p>阻塞 IO（BIO）是最传统的一种 IO 模型，即在读写数据过程中会发生阻塞现象，直至
+有可供读取的数据或者数据能够写入。</p><p>（1）在 BIO 模式中，服务器会为每个客户端请求建立一个线程，由该线程单独负责
+处理一个客户请求，这种模式虽然简单方便，但由于服务器为每个客户端的连接都采
+用一个线程去处理，使得资源占用非常大。因此，当连接数量达到上限时，如果再有
+用户请求连接，直接会导致资源瓶颈，严重的可能会直接导致服务器崩溃。</p><p>（2）大多数情况下为了避免上述问题，都采用了线程池模型。也就是创建一个固定大
+小的线程池，如果有客户端请求，就从线程池中取一个空闲线程来处理，当客户端处
+理完操作之后，就会释放对线程的占用。因此这样就避免为每一个客户端都要创建线
+程带来的资源浪费，使得线程可以重用。但线程池也有它的弊端，如果连接大多是长
+连接，可能会导致在一段时间内，线程池中的线程都被占用，那么当再有客户端请求
+连接时，由于没有空闲线程来处理，就会导致客户端连接失败。传统的 BIO 模式如下
+图所示：</p></blockquote><p><img src='https://img-blog.csdnimg.cn/e9a9b36d706b4781ae7e7a77efd36160.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><h3><a name='header-n21' class='md-header-anchor '></a>1.3 非阻塞IO（NIO）</h3><blockquote><p>基于 BIO 的各种弊端，在 JDK1.4 开始出现了高性能 IO 设计模式非阻塞 IO（NIO）。</p><p>（1）NIO 采用非阻塞模式，基于 Reactor 模式的工作方式，I/O 调用不会被阻塞，它
+的实现过程是：会先对每个客户端注册感兴趣的事件，然后有一个线程专门去轮询每
+个客户端是否有事件发生，当有事件发生时，便顺序处理每个事件，当所有事件处理
+完之后，便再转去继续轮询。如下图所示：<img src='https://img-blog.csdnimg.cn/aa3a9a4f79d14cb2be4df14cd65339af.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><p>（2）NIO 中实现非阻塞 I/O 的核心对象就是 Selector，Selector 就是注册各种 I/O
+事件地方，而且当我们感兴趣的事件发生时，就是这个对象告诉我们所发生的事件，
+如下图所示：<img src='https://img-blog.csdnimg.cn/747c5fb774804c9fa9d0d7cd7dd1cf4c.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><p>（3）NIO 的最重要的地方是当一个连接创建后，不需要对应一个线程，这个连接会被
+注册到多路复用器上面，一个选择器线程可以同时处理成千上万个连接，系统不必创
+建大量的线程，也不必维护这些线程，从而大大减小了系统的开销。</p><p><img src='https://img-blog.csdnimg.cn/e4ea4111eed644be8ef9eb70640eac04.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p></blockquote><h3><a name='header-n28' class='md-header-anchor '></a>1.4 异步非阻塞IO（AIO）</h3><blockquote><p>（1）AIO 也就是 NIO 2，在 Java 7 中引入了 NIO 的改进版 NIO 2,它是异步非阻塞
+的 IO 模型。异步 IO 是基于事件和回调机制实现的，也就是说 AIO 模式不需要selector 操作，而是是事件驱动形式，也就是当客户端发送数据之后，会主动通知服
+务器，接着服务器再进行读写操作。</p><p>（2）Java 的 AIO API 其实就是 Proactor 模式的应用，和 Reactor 模式类似。
+Reactor 和 Proactor 模式的主要区别就是真正的读取和写入操作是有谁来完成的，
+Reactor 中需要应用程序自己读取或者写入数据，而 Proactor 模式中，应用程序不需
+要进行实际的读写过程，它只需要从缓存区读取或者写入即可，操作系统会读取缓存
+区或者写入缓存区到真正的 IO 设备</p></blockquote><h3><a name='header-n32' class='md-header-anchor '></a>1.5 NIO概述</h3><blockquote><p>Java NIO 由以下几个核心部分组成：</p><ul><li>Channels</li><li>Buffers</li><li>Selectors</li></ul><p>虽然 Java NIO 中除此之外还有很多类和组件，但 Channel，Buffer 和 Selector 构成
+了核心的 API。其它组件，如 Pipe 和 FileLock，只不过是与三个核心组件共同使用的
+工具类。</p></blockquote><h4><a name='header-n43' class='md-header-anchor '></a>1.5.1 Channel</h4><blockquote><p>首先说一下 Channel，可以翻译成“通道”。Channel 和 IO 中的 Stream(流)是差不
+多一个等级的。只不过 Stream 是单向的，譬如：InputStream, OutputStream.而
+Channel 是双向的，既可以用来进行读操作，又可以用来进行写操作。
+NIO 中的 Channel 的主要实现有：FileChannel、DatagramChannel、
+SocketChannel 和 ServerSocketChannel，这里看名字就可以猜出个所以然来：分别
+可以对应文件  IO、UDP 和 TCP（Server 和 Client）。</p></blockquote><h4><a name='header-n46' class='md-header-anchor '></a>1.5.2 Buffer</h4><blockquote><p>NIO 中的关键 Buffer 实现有：ByteBuffer, CharBuffer, DoubleBuffer, FloatBuffer, IntBuffer, LongBuffer, ShortBuffer，分别对应基本数据类型: byte, char, double, float, int, long,short。</p></blockquote><h4><a name='header-n49' class='md-header-anchor '></a>1.5.3 Selector</h4><blockquote><p>Selector 运行单线程处理多个 Channel，如果你的应用打开了多个通道，但每个连接
+的流量都很低，使用 Selector 就会很方便。例如在一个聊天服务器中。要使用
+Selector, 得向 Selector 注册 Channel，然后调用它的 select()方法。这个方法会一直
+阻塞到某个注册的通道有事件就绪。一旦这个方法返回，线程就可以处理这些事件，
+事件的例子有如新的连接进来、数据接收等。</p></blockquote><h3><a name='header-n52' class='md-header-anchor '></a>1.5.4 Channel Buffer Selector 三者关系</h3><blockquote><p>（1）一个 Channel 就像一个流，只是 Channel 是双向的，Channel 读数据到 Buffer，
+Buffer 写数据到 Channel</p><p><img src='https://img-blog.csdnimg.cn/d4ca13d4839b4441974f36f4f05aad63.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><p>（2）一个 selector 允许一个线程处理多个channel</p><p><img src='https://img-blog.csdnimg.cn/6bf22d3232514615807a9461e917fb0f.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><p>&nbsp;</p></blockquote><h2><a name='header-n59' class='md-header-anchor '></a>2. Channel</h2><h3><a name='header-n60' class='md-header-anchor '></a>2.1 概述</h3><blockquote><p>Java NIO 的通道类似流，但又有些不同：</p><ul><li>既可以从通道中读取数据，又可以写数据到通道。但流的读写通常是单向的。</li><li>通道可以异步地读写。</li><li>通道中的数据总是要先读到一个 Buffer中写入</li></ul></blockquote><h3><a name='header-n70' class='md-header-anchor '></a>2.2 Channel实现</h3><blockquote><p>下面是 Java NIO 中最重要的 Channel 的实现：</p><ul><li>FileChannel - DatagramChannel - SocketChannel - ServerSocketChannel</li><li>（1）FileChannel 从文件中读写数据。</li><li>（2）DatagramChannel 能通过 UDP 读写网络中的数据。</li><li>（3）SocketChannel 能通过 TCP 读写网络中的数据。</li><li>（4）ServerSocketChannel 可以监听新进来的 TCP 连接，像 Web 服务器那样。对
+每一个新进来的连接都会创建一个 SocketChannel。
+正如你所看到的，这些通道涵盖了 UDP 和 TCP网络IO，以及文件IO。</li></ul></blockquote><h3><a name='header-n84' class='md-header-anchor '></a>2.3 FileChannel示例</h3><blockquote><p>FileChannel 类可以实现常用的 read，write 以及 scatter/gather 操作，同时它也提
+供了很多专用于文件的新方法。这些方法中的许多都是我们所熟悉的文件操作。</p></blockquote><p><img src='https://img-blog.csdnimg.cn/b9e083b56fd44ac1a8c6ffc81d7f2f36.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><h4><a name='header-n88' class='md-header-anchor '></a>2.3.1 打开FileChannel</h4><blockquote><p>在使用 FileChannel 之前，必须先打开它。但是，我们无法直接打开一个
+FileChannel，需要通过使用一个 InputStream、OutputStream 或
+RandomAccessFile 来获取一个 FileChannel 实例。下面是通过 RandomAccessFile
+打开 FileChannel 的示例：</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="java"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="java"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8.16406px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">omAccessFile</span> <span class="cm-variable">aFile</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">RandomAccessFile</span>(<span class="cm-string">"d:\\a\\01.txt"</span>, <span class="cm-string">"rw"</span>);</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">FileChannel</span> <span class="cm-variable">inChannel</span> <span class="cm-operator">=</span> <span class="cm-variable">aFile</span>.<span class="cm-variable">getChannel</span>();</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 113px;"></div><div class="CodeMirror-gutters" style="display: none; height: 113px;"></div></div></div></pre></blockquote><h4><a name='header-n92' class='md-header-anchor '></a>2.3.2 从FileChannel读取数据</h4><p>调用多个 read()方法之一从 FileChannel 中读取数据。如：</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="java"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="java"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8.16406px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">ByteBuffer</span> <span class="cm-variable">buf</span> <span class="cm-operator">=</span> <span class="cm-variable">ByteBuffer</span>.<span class="cm-variable">allocate</span>(<span class="cm-number">48</span>);</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">int</span> <span class="cm-variable">bytesRead</span> &nbsp;<span class="cm-operator">=</span> <span class="cm-variable">inChannel</span>.<span class="cm-variable">read</span>(<span class="cm-variable">buf</span>);</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 68px;"></div><div class="CodeMirror-gutters" style="display: none; height: 68px;"></div></div></div></pre><blockquote><p>首先，分配一个 Buffer。从 FileChannel 中读取的数据将被读到 Buffer 中。然后，调
+用 FileChannel.read()方法。该方法将数据从 FileChannel 读取到 Buffer 中。read()
+方法返回的 int 值表示了有多少字节被读到了 Buffer 中。如果返回-1，表示到了文件
+末尾。</p></blockquote><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="java" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="java"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 7.99478px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> <span class="cm-tab" role="presentation" cm-text="	">   </span><span class="cm-comment">/**</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; <span class="cm-comment">* 从FileChannel中读数据</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; <span class="cm-comment">* @throws Exception</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; <span class="cm-comment">*/</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-meta">@Test</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">public</span> <span class="cm-variable-3">void</span> <span class="cm-def">test1</span> () <span class="cm-keyword">throws</span> <span class="cm-variable">Exception</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">System</span>.<span class="cm-variable">out</span>.<span class="cm-variable">println</span>(<span class="cm-string">"Hello World"</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">RandomAccessFile</span> <span class="cm-variable">aFile</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">RandomAccessFile</span>(<span class="cm-string">"d:\\Javacode\\Javacode_1\\1.txt"</span>, <span class="cm-string">"rw"</span>);<span class="cm-comment">//获取文件</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">FileChannel</span> <span class="cm-variable">inChannel</span> <span class="cm-operator">=</span> <span class="cm-variable">aFile</span>.<span class="cm-variable">getChannel</span>();<span class="cm-comment">//通过文件获取Channel通道</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">ByteBuffer</span> <span class="cm-variable">buf</span> <span class="cm-operator">=</span> <span class="cm-variable">ByteBuffer</span>.<span class="cm-variable">allocate</span>(<span class="cm-number">1024</span>);<span class="cm-comment">//创建Buffer</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">bytesRead</span> <span class="cm-operator">=</span> <span class="cm-variable">inChannel</span>.<span class="cm-variable">read</span>(<span class="cm-variable">buf</span>);<span class="cm-comment">//Channel--&gt;Buffer</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">while</span> (<span class="cm-variable">bytesRead</span> <span class="cm-operator">!=</span> <span class="cm-operator">-</span><span class="cm-number">1</span>) {<span class="cm-comment">//返回-1则读取到末尾</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-comment">/**System.out.println(bytesRead);//读取数*/</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">buf</span>.<span class="cm-variable">flip</span>();<span class="cm-comment">//读写倒置</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">while</span> (<span class="cm-variable">buf</span>.<span class="cm-variable">hasRemaining</span>()) {<span class="cm-comment">//循环</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">System</span>.<span class="cm-variable">out</span>.<span class="cm-variable">print</span>((<span class="cm-variable-3">char</span>) <span class="cm-variable">buf</span>.<span class="cm-variable">get</span>());<span class="cm-comment">//输出</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">buf</span>.<span class="cm-variable">clear</span>();<span class="cm-comment">//清除</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">bytesRead</span> <span class="cm-operator">=</span> <span class="cm-variable">inChannel</span>.<span class="cm-variable">read</span>(<span class="cm-variable">buf</span>);<span class="cm-comment">//下一次读取</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">aFile</span>.<span class="cm-variable">close</span>();<span class="cm-comment">//文件关闭</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">System</span>.<span class="cm-variable">out</span>.<span class="cm-variable">println</span>(<span class="cm-string">"操作结束"</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">System</span>.<span class="cm-variable">out</span>.<span class="cm-variable">println</span>(<span class="cm-variable">bytesRead</span>);<span class="cm-comment">//读取到末尾返回-1</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 923px;"></div><div class="CodeMirror-gutters" style="display: none; height: 923px;"></div></div></div></pre><h4><a name='header-n98' class='md-header-anchor '></a>2.3.3 向FileChannel写入数据</h4><p>使用 FileChannel.write()方法向 FileChannel 写数据，该方法的参数是一个 Buffer。
+如：</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="java" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="java"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 7.99478px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-comment">/**</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; <span class="cm-comment">* 覆盖向FileChannel写数据</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; <span class="cm-comment">* @throws IOException</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; <span class="cm-comment">*/</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-meta">@Test</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">public</span> <span class="cm-variable-3">void</span> <span class="cm-def">test2</span>() <span class="cm-keyword">throws</span> <span class="cm-variable">IOException</span>{</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">RandomAccessFile</span> <span class="cm-variable">aFile</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">RandomAccessFile</span>(<span class="cm-string">"d:\\Javacode\\Javacode_1\\1.txt"</span>, <span class="cm-string">"rw"</span>);<span class="cm-comment">//获取文件</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">FileChannel</span> <span class="cm-variable">inChannel</span> <span class="cm-operator">=</span> <span class="cm-variable">aFile</span>.<span class="cm-variable">getChannel</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable-3">String</span> <span class="cm-variable">newData</span> <span class="cm-operator">=</span> <span class="cm-string">"New String to write to file..."</span> <span class="cm-operator">+</span> <span class="cm-variable">System</span>.<span class="cm-variable">currentTimeMillis</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">ByteBuffer</span> <span class="cm-variable">buf</span> <span class="cm-operator">=</span> <span class="cm-variable">ByteBuffer</span>.<span class="cm-variable">allocate</span>(<span class="cm-number">48</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">buf</span>.<span class="cm-variable">clear</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">buf</span>.<span class="cm-variable">put</span>(<span class="cm-variable">newData</span>.<span class="cm-variable">getBytes</span>());<span class="cm-comment">//写入Buffer</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">buf</span>.<span class="cm-variable">flip</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">while</span>(<span class="cm-variable">buf</span>.<span class="cm-variable">hasRemaining</span>()) {<span class="cm-comment">//循环</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">inChannel</span>.<span class="cm-variable">write</span>(<span class="cm-variable">buf</span>);<span class="cm-comment">//写入Channel</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">inChannel</span>.<span class="cm-variable">close</span>();<span class="cm-comment">//关闭Channel</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" class="cm-tab-wrap-hack" style="padding-right: 0.1px;"> &nbsp;  }<span class="cm-tab" role="presentation" cm-text="	">   </span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 630px;"></div><div class="CodeMirror-gutters" style="display: none; height: 630px;"></div></div></div></pre><blockquote><p>注意 FileChannel.write()是在 while 循环中调用的。因为无法保证 write()方法一次能
+向 FileChannel 写入多少字节，因此需要重复调用 write()方法，直到 Buffer 中已经没
+有尚未写入通道的字节。</p></blockquote><h4><a name='header-n103' class='md-header-anchor '></a>2.3.4 关闭FileChannel</h4><p>用完 FileChannel 后必须将其关闭。如：</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="java"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="java"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8.16406px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">inChannel</span>.<span class="cm-variable">close</span>();</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div><div class="CodeMirror-gutters" style="display: none; height: 23px;"></div></div></div></pre><h4><a name='header-n106' class='md-header-anchor '></a>2.3.5 FileChannel的position方法</h4><blockquote><p>有时可能需要在 FileChannel 的某个特定位置进行数据的读/写操作。可以通过调用
+position()方法获取 FileChannel 的当前位置。也可以通过调用 position(long pos)方
+法设置 FileChannel 的当前位置。</p><p>这里有两个例子:</p><p>long pos = channel.position();</p><p>channel.position(pos +123);</p><p>如果将位置设置在文件结束符之后，然后试图从文件通道中读取数据，读方法将返回- 1 （文件结束标志）。</p><p>如果将位置设置在文件结束符之后，然后向通道中写数据，文件将撑大到当前位置并
+写入数据。这可能导致“文件空洞”，磁盘上物理文件中写入的数据间有空隙。</p></blockquote><h4><a name='header-n114' class='md-header-anchor '></a>2.3.6 FileChannel的size方法</h4><p>FileChannel 实例的 size()方法将返回该实例所关联文件的大小。如:</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8.16406px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">long fileSize = channel.size();</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div><div class="CodeMirror-gutters" style="display: none; height: 23px;"></div></div></div></pre><h4><a name='header-n117' class='md-header-anchor '></a>2.3.7 FileChannel的truncate方法</h4><p>可以使用 FileChannel.truncate()方法截取一个文件。</p><p>截取文件时，文件将中指定长度
+后面的部分将被删除。</p><p>如：
+channel.truncate(1024);</p><p>这个例子截取文件的前 1024 个字节。</p><h4><a name='header-n122' class='md-header-anchor '></a>2.3.8 FileChannel的force方法</h4><blockquote><p>FileChannel.force()方法将通道里尚未写入磁盘的数据强制写到磁盘上。出于性能方
+面的考虑，操作系统会将数据缓存在内存中，所以无法保证写入到 FileChannel 里的
+数据一定会即时写到磁盘上。要保证这一点，需要调用 force()方法。</p><p>force()方法有一个 boolean 类型的参数，指明是否同时将文件元数据（权限信息等）
+写到磁盘上。</p></blockquote><h4><a name='header-n126' class='md-header-anchor '></a>2.3.9 FileChannel的transferTo和transferFrom方法</h4><blockquote><p>通道之间的数据传输：</p><p>如果两个通道中有一个是 FileChannel，那你可以直接将数据从一个 channel 传输到
+另外一个 channel。</p></blockquote><blockquote><p>（1）transferFrom()方法
+FileChannel 的 transferFrom()方法可以将数据从源通道传输到 FileChannel 中（译
+者注：这个方法在 JDK 文档中的解释为将字节从给定的可读取字节通道传输到此通道
+的文件中）。</p><p>下面是一个 FileChannel 完成文件间的复制的例子：</p></blockquote><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="java" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="java"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8.16406px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">public</span> <span class="cm-keyword">class</span> <span class="cm-def">FileChannelWrite</span> {</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">public</span> <span class="cm-keyword">static</span> <span class="cm-variable-3">void</span> <span class="cm-variable">main</span>(<span class="cm-variable-3">String</span> <span class="cm-variable">args</span>[]) <span class="cm-keyword">throws</span> <span class="cm-variable">Exception</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">RandomAccessFile</span> <span class="cm-variable">aFile</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">RandomAccessFile</span>(<span class="cm-string">"d:\\a\\01.txt"</span>, <span class="cm-string">"rw"</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">FileChannel</span> <span class="cm-variable">fromChannel</span> <span class="cm-operator">=</span> <span class="cm-variable">aFile</span>.<span class="cm-variable">getChannel</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">RandomAccessFile</span> <span class="cm-variable">bFile</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">RandomAccessFile</span>(<span class="cm-string">"d:\\a\\02.txt"</span>, <span class="cm-string">"rw"</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">FileChannel</span> <span class="cm-variable">toChannel</span> <span class="cm-operator">=</span> <span class="cm-variable">bFile</span>.<span class="cm-variable">getChannel</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable-3">long</span> <span class="cm-variable">position</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable-3">long</span> <span class="cm-variable">count</span> <span class="cm-operator">=</span> <span class="cm-variable">fromChannel</span>.<span class="cm-variable">size</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">toChannel</span>.<span class="cm-variable">transferFrom</span>(<span class="cm-variable">fromChannel</span>, <span class="cm-variable">position</span>, <span class="cm-variable">count</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">aFile</span>.<span class="cm-variable">close</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">bFile</span>.<span class="cm-variable">close</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">System</span>.<span class="cm-variable">out</span>.<span class="cm-variable">println</span>(<span class="cm-string">"over!"</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 540px;"></div><div class="CodeMirror-gutters" style="display: none; height: 540px;"></div></div></div></pre><blockquote><p>方法的输入参数 position 表示从 position 处开始向目标文件写入数据，count 表示最
+多传输的字节数。如果源通道的剩余空间小于 count 个字节，则所传输的字节数要小
+于请求的字节数。此外要注意，在 SoketChannel 的实现中，SocketChannel 只会传
+输此刻准备好的数据（可能不足 count 字节）。因此，SocketChannel 可能不会将请
+求的所有数据(count 个字节)全部传输到 FileChannel 中。</p></blockquote><blockquote><p>（2）transferTo()方法</p><p>transferTo()方法将数据从 FileChannel 传输到其他的 channel 中。</p><p>下面是一个 transferTo()方法的例子：</p></blockquote><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="java" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="java"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8.16406px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">public</span> <span class="cm-keyword">class</span> <span class="cm-def">FileChannelDemo</span> {</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">public</span> <span class="cm-keyword">static</span> <span class="cm-variable-3">void</span> <span class="cm-variable">main</span>(<span class="cm-variable-3">String</span> <span class="cm-variable">args</span>[]) <span class="cm-keyword">throws</span> <span class="cm-variable">Exception</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">RandomAccessFile</span> <span class="cm-variable">aFile</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">RandomAccessFile</span>(<span class="cm-string">"d:\\atguigu\\02.txt"</span>, <span class="cm-string">"rw"</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">FileChannel</span> <span class="cm-variable">fromChannel</span> <span class="cm-operator">=</span> <span class="cm-variable">aFile</span>.<span class="cm-variable">getChannel</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">RandomAccessFile</span> <span class="cm-variable">bFile</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">RandomAccessFile</span>(<span class="cm-string">"d:\\atguigu\\03.txt"</span>, <span class="cm-string">"rw"</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">FileChannel</span> <span class="cm-variable">toChannel</span> <span class="cm-operator">=</span> <span class="cm-variable">bFile</span>.<span class="cm-variable">getChannel</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable-3">long</span> <span class="cm-variable">position</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable-3">long</span> <span class="cm-variable">count</span> <span class="cm-operator">=</span> <span class="cm-variable">fromChannel</span>.<span class="cm-variable">size</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">fromChannel</span>.<span class="cm-variable">transferTo</span>(<span class="cm-variable">position</span>, <span class="cm-variable">count</span>, <span class="cm-variable">toChannel</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">aFile</span>.<span class="cm-variable">close</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">bFile</span>.<span class="cm-variable">close</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">System</span>.<span class="cm-variable">out</span>.<span class="cm-variable">println</span>(<span class="cm-string">"over!"</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 585px;"></div><div class="CodeMirror-gutters" style="display: none; height: 585px;"></div></div></div></pre><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n141" mdtype="fences" style="break-inside: unset;">	/**
+     * 通道之间的数据传送
+     * @throws Exception
+     */
+    @Test
+    public void test3() throws Exception{
+        RandomAccessFile aFile = new RandomAccessFile("d:\\Javacode\\Javacode_1\\1.txt", "rw");//获取文件
+        FileChannel fromChannel = aFile.getChannel();
+        RandomAccessFile bFile = new RandomAccessFile("d:\\Javacode\\Javacode_1\\2.txt", "rw");//获取文件
+        FileChannel toChannel = bFile.getChannel();
+        long position = 0;
+        long count = fromChannel.size();
+        fromChannel.transferTo(position, count, toChannel);
+        aFile.close();
+        bFile.close();
+        System.out.println("数据传送完成");
+    }
+</pre><h3><a name='header-n142' class='md-header-anchor '></a>2.4 Scatter/Gather</h3><blockquote><p>Java NIO 开始支持 scatter/gather，scatter/gather 用于描述从 Channel 中读取或
+者写入到 Channel 的操作。</p><p>分散（scatter）从 Channel 中读取是指在读操作时将读取的数据写入多个 buffer 中。
+因此，Channel 将从 Channel 中读取的数据“分散（scatter）”到多个 Buffer 中。</p><p>聚集（gather）写入 Channel 是指在写操作时将多个 buffer 的数据写入同一个
+Channel，因此，Channel 将多个 Buffer 中的数据“聚集（gather）”后发送到
+Channel。</p><p>scatter / gather 经常用于需要将传输的数据分开处理的场合，例如传输一个由消息头
+和消息体组成的消息，你可能会将消息体和消息头分散到不同的 buffer 中，这样你可
+以方便的处理消息头和消息体。</p></blockquote><h4><a name='header-n148' class='md-header-anchor '></a>2.4.1 Scattering Reads</h4><p>Scattering Reads 是指数据从一个 channel 读取到多个 buffer 中。如：</p><p><img src='https://img-blog.csdnimg.cn/294130d746494694b0a26d9eea6187a9.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n151" mdtype="fences">ByteBuffer header = ByteBuffer.allocate(128);
+ByteBuffer body = ByteBuffer.allocate(1024);
+ByteBuffer[] bufferArray  = { header,body};
+channel.read(bufferArray);ocate(1024);
+</pre><blockquote><p>注意 buffer 首先被插入到数组，然后再将数组作为 channel.read() 的输入参数。
+read()方法按照 buffer 在数组中的顺序将从 channel 中读取的数据写入到 buffer，当
+一个 buffer 被写满后，channel 紧接着向另一个 buffer 中写。</p><p>Scattering Reads 在移动下一个 buffer 前，必须填满当前的 buffer，这也意味着它
+不适用于动态消息(译者注：消息大小不固定)。换句话说，如果存在消息头和消息体，
+消息头必须完成填充（例如 128byte），Scattering Reads 才能正常工作。</p></blockquote><h4><a name='header-n155' class='md-header-anchor '></a>2.4.2 Gathering Writes</h4><p>Gathering Writes 是指数据从多个 buffer 写入到同一个 channel。如下图描述：</p><p><img src='https://img-blog.csdnimg.cn/853428319d6348b291f9efa3dba79e30.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n158" mdtype="fences">ByteBuffer header = ByteBuffer.allocate(128);
+ByteBuffer body = ByteBuffer.allocate(1024);
+//write data into buffers
+ByteBuffer[] bufferArray = { header, body };
+channel.write(bufferArray);
+</pre><blockquote><p>buffers 数组是 write()方法的入参，write()方法会按照 buffer 在数组中的顺序，将数
+据写入到 channel，注意只有 position 和 limit 之间的数据才会被写入。因此，如果
+一个 buffer 的容量为 128byte，但是仅仅包含 58byte 的数据，那么这 58byte 的数
+据将被写入到 channel 中。因此与 Scattering Reads 相反，Gathering Writes 能较
+好的处理动态消息。</p></blockquote><h2><a name='header-n161' class='md-header-anchor '></a>3. SocketChannel</h2><blockquote><p>（1）SocketChannel 就是 NIO 对于非阻塞 socket 操作的支持的组件，其在 socket 上
+封装了一层，主要是支持了非阻塞的读写。同时改进了传统的单向流 API,，Channel
+同时支持读写。</p><p>（2）socket 通道类主要分为 DatagramChannel、SocketChannel 和
+ServerSocketChannel，它们在被实例化时都会创建一个对等 socket 对象。要把一个
+socket 通道置于非阻塞模式，我们要依靠所有 socket 通道类的公有超级类：
+SelectableChannel。就绪选择（readiness selection）是一种可以用来查询通道的
+机制，该查询可以判断通道是否准备好执行一个目标操作，如读或写。非阻塞 I/O 和
+可选择性是紧密相连的，那也正是管理阻塞模式的 API 代码要在 SelectableChannel
+超级类中定义的原因。</p><p>（3）设置或重新设置一个通道的阻塞模式是很简单的，只要调用
+configureBlocking( )方法即可，传递参数值为 true 则设为阻塞模式，参数值为 false
+值设为非阻塞模式。可以通过调用 isBlocking( )方法来判断某个 socket 通道当前处于
+哪种模式。</p></blockquote><h3><a name='header-n166' class='md-header-anchor '></a>3.1 ServerSocketChannel</h3><blockquote><p>ServerSocketChannel 是一个基于通道的 socket 监听器。它同我们所熟悉的
+java.net.ServerSocket 执行相同的任务，不过它增加了通道语义，因此能够在非阻塞
+模式下运行。</p><p>由于 ServerSocketChannel 没有 bind()方法，因此有必要取出对等的 socket 并使用
+它来绑定到一个端口以开始监听连接。我们也是使用对等 ServerSocket 的 API 来根
+据需要设置其他的 socket 选项。</p><p>同 java.net.ServerSocket 一样，ServerSocketChannel 也有 accept( )方法。
+ServerSocketChannel 的 accept()方法会返回 SocketChannel 类型对象，
+SocketChannel 可以在非阻塞模式下运行。</p></blockquote><p>以下代码演示了如何使用一个非阻塞的 accept()方法：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n172" mdtype="fences" style="break-inside: unset;">public class FileChannelAccept {
+    public static final String GREETING = "Hello java nio.\r\n";
+    public static void main(String[] argv) throws Exception {
+        int port = 1234; // default
+        if (argv.length &gt; 0) {
+            port = Integer.parseInt(argv[0]);
+        }
+        ByteBuffer buffer = ByteBuffer.wrap(GREETING.getBytes());
+        ServerSocketChannel ssc = ServerSocketChannel.open();
+        ssc.socket().bind(new InetSocketAddress(port));
+        ssc.configureBlocking(false);
+        while (true) {
+            System.out.println("Waiting for connections");
+            SocketChannel sc = ssc.accept();
+            if (sc == null) {
+                System.out.println("null");
+                Thread.sleep(2000);
+            } else {
+                System.out.println("Incoming connection from: " +
+                                   sc.socket().getRemoteSocketAddress());
+                buffer.rewind();
+                sc.write(buffer);
+                sc.close();
+            }
+        }
+    }
+}
+
+</pre><h4><a name='header-n173' class='md-header-anchor '></a>3.1.1 打开ServerSocketChannel</h4><p>通过调用 ServerSocketChannel.open() 方法来打开 ServerSocketChannel.</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n175" mdtype="fences">ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+</pre><h4><a name='header-n176' class='md-header-anchor '></a>3.1.2 关闭ServerSocketChannel</h4><p>通过调用 ServerSocketChannel.close() 方法来关闭 ServerSocketChanel.</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n178" mdtype="fences">serverSocketChannel.close();
+</pre><h4><a name='header-n179' class='md-header-anchor '></a>3.1.3 监听新的连接</h4><blockquote><p>通过 ServerSocketChannel.accept() 方法监听新进的连接。当 accept()方法返回时
+候,它返回一个包含新进来的连接的 SocketChannel。因此, accept()方法会一直阻塞
+到有新连接到达。</p><p>通常不会仅仅只监听一个连接,在 while 循环中调用 accept()方法. 如下面的例子：</p></blockquote><h4><a name='header-n183' class='md-header-anchor '></a>3.1.4 阻塞模式</h4><p>会在 SocketChannel sc = ssc.accept();这里阻塞住进程。</p><h4><a name='header-n185' class='md-header-anchor '></a>3.1.5 非阻塞模式</h4><p>ServerSocketChannel 可以设置成非阻塞模式。在非阻塞模式下，accept() 方法会立
+刻返回，如果还没有新进来的连接,返回的将是 null。</p><p>因此，需要检查返回的
+SocketChannel 是否是 null.</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n188" mdtype="fences" style="break-inside: unset;">	/**
+     * ServerSocketChannel
+     */
+    @Test
+    public void test4() throws Exception {
+        int port = 1234; // default
+        ByteBuffer buffer = ByteBuffer.wrap("Hello World".getBytes());
+        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+        serverSocketChannel.socket().bind(new InetSocketAddress(port));
+        serverSocketChannel.configureBlocking(false);
+        while (true) {
+            System.out.println("Waiting for connections ...");
+            SocketChannel socketChannel = serverSocketChannel.accept();
+            if (socketChannel == null) {
+                System.out.println("null");
+                Thread.sleep(2000);
+            } else {
+                System.out.println("Incoming connection from: " + socketChannel.socket().getRemoteSocketAddress());
+                buffer.rewind();
+                socketChannel.write(buffer);
+                socketChannel.close();
+            }
+        }
+    }
+</pre><h3><a name='header-n189' class='md-header-anchor '></a>3.2 SocketChannel</h3><h4><a name='header-n190' class='md-header-anchor '></a>3.2.1 SocketChannel介绍</h4><blockquote><p>Java NIO 中的 SocketChannel 是一个连接到 TCP 网络套接字的通道。</p><p>A selectable channel for stream-oriented connecting sockets.</p><p>以上是 Java docs 中对于 SocketChannel 的描述：SocketChannel 是一种面向流连接
+sockets 套接字的可选择通道。从这里可以看出：</p><p> SocketChannel 是用来连接 Socket 套接字</p><p> SocketChannel 主要用途用来处理网络 I/O 的通道</p><p> SocketChannel 是基于 TCP 连接传</p><p> SocketChannel 实现了可选择通道，可以被多路复用的</p></blockquote><h4><a name='header-n199' class='md-header-anchor '></a>3.2.2 SocketChannel特征</h4><blockquote><p>（1）对于已经存在的 socket 不能创建 SocketChannel</p><p>（2）SocketChannel 中提供的 open 接口创建的 Channel 并没有进行网络级联，需要使
+用 connect 接口连接到指定地址</p><p>（3）未进行连接的 SocketChannle 执行 I/O 操作时，会抛出
+NotYetConnectedException</p><p>（4）SocketChannel 支持两种 I/O 模式：阻塞式和非阻塞式</p><p>（5）SocketChannel 支持异步关闭。如果 SocketChannel 在一个线程上 read 阻塞，另
+一个线程对该 SocketChannel 调用 shutdownInput，则读阻塞的线程将返回-1 表示没有
+读取任何数据；如果 SocketChannel 在一个线程上 write 阻塞，另一个线程对该
+SocketChannel 调用 shutdownWrite，则写阻塞的线程将抛出
+AsynchronousCloseException</p><p>（6）SocketChannel 支持设定参数</p><p>SO_SNDBUF 套接字发送缓冲区大小</p><p>SO_RCVBUF 套接字接收缓冲区大小</p><p>SO_KEEPALIVE 保活连接</p><p>O_REUSEADDR 复用地址</p><p>SO_LINGER 有数据传输时延缓关闭 Channel (只有在非阻塞模式下有用)</p><p>TCP_NODELAY 禁用 Nagle 算法</p></blockquote><h4><a name='header-n213' class='md-header-anchor '></a>3.2.3 SocketChannel使用</h4><h5><a name='header-n214' class='md-header-anchor '></a>3.2.3.1 创建SocketChannel</h5><p>方式一：</p><blockquote><p>SocketChannel socketChannel = SocketChannel.open(new
+InetSocketAddress(&quot;<a href='http://www.baidu.com' target='_blank' class='url'>www.baidu.com</a>&quot;, 80));</p></blockquote><p>方式二：</p><blockquote><p>SocketChannel socketChanne2 = SocketChannel.open();</p><p>socketChanne2.connect(new InetSocketAddress(&quot;<a href='http://www.baidu.com' target='_blank' class='url'>www.baidu.com</a>&quot;, 80))</p></blockquote><p>直接使用有参 open api 或者使用无参 open api，但是在无参 open 只是创建了一个
+SocketChannel 对象，并没有进行实质的 tcp 连接。</p><h5><a name='header-n223' class='md-header-anchor '></a>3.2.3.2 连接校验</h5><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n224" mdtype="fences">socketChannel.isOpen(); // 测试 SocketChannel 是否为 open 状态
+socketChannel.isConnected(); //测试 SocketChannel 是否已经被连接
+socketChannel.isConnectionPending(); //测试 SocketChannel 是否正在进行连接
+socketChannel.finishConnect(); //校验正在进行套接字连接的 SocketChannel是否已经完成连接
+</pre><h5><a name='header-n225' class='md-header-anchor '></a>3.2.3.3 读写模式</h5><p>前面提到 SocketChannel 支持阻塞和非阻塞两种模式：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n227" mdtype="fences">socketChannel.configureBlocking(false);
+</pre><p>通过以上方法设置 SocketChannel 的读写模式。false 表示非阻塞，true 表示阻塞。</p><h5><a name='header-n229' class='md-header-anchor '></a>3.2.3.4 读写</h5><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n230" mdtype="fences">SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress("www.baidu.com", 80));
+ByteBuffer byteBuffer = ByteBuffer.allocate(16);
+socketChannel.read(byteBuffer);
+socketChannel.close();
+System.out.println("read over");
+</pre><p>以上为阻塞式读，当执行到 read 出，线程将阻塞，控制台将无法打印 read over</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n232" mdtype="fences">SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress("www.baidu.com", 80));
+socketChannel.configureBlocking(false);
+ByteBuffer byteBuffer = ByteBuffer.allocate(16);
+socketChannel.read(byteBuffer);
+socketChannel.close();
+</pre><p>以上为非阻塞读，控制台将打印 read over
+读写都是面向缓冲区，这个读写方式与前文中的 FileChannel 相同。</p><h5><a name='header-n234' class='md-header-anchor '></a>3.2.3.5 设置和获取参数</h5><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n235" mdtype="fences">socketChannel.setOption(StandardSocketOptions.SO_KEEPALIVE, Boolean.TRUE)
+.setOption(StandardSocketOptions.TCP_NODELAY, Boolean.TRUE);
+</pre><p>通过 setOptions 方法可以设置 socket 套接字的相关参数</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n237" mdtype="fences">socketChannel.getOption(StandardSocketOptions.SO_KEEPALIVE);
+socketChannel.getOption(StandardSocketOptions.SO_RCVBUF);
+</pre><p>可以通过 getOption 获取相关参数的值。如默认的接收缓冲区大小是 8192byte。</p><p>SocketChannel 还支持多路复用，但是多路复用在后续内容中会介绍到。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n240" mdtype="fences" style="break-inside: unset;">	/**
+     * SocketChannel
+     * @throws Exception
+     */
+    @Test
+    public void test5() throws Exception{
+        SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress("www.baidu.com", 80));
+        //非阻塞模式
+        socketChannel.configureBlocking(false);
+        ByteBuffer byteBuffer = ByteBuffer.allocate(16);
+        socketChannel.read(byteBuffer);
+        socketChannel.close();
+        System.out.println("read over");
+    }
+</pre><h3><a name='header-n241' class='md-header-anchor '></a>3.3 DatagramChannel</h3><blockquote><p>正如 SocketChannel 对应 Socket，ServerSocketChannel 对应 ServerSocket，每
+一个 DatagramChannel 对象也有一个关联的 DatagramSocket 对象。</p><p>正如
+SocketChannel 模拟连接导向的流协议（如 TCP/IP），DatagramChannel 则模拟包
+导向的无连接协议（如 UDP/IP）。</p><p>DatagramChannel 是无连接的，每个数据报
+（datagram）都是一个自包含的实体，拥有它自己的目的地址及不依赖其他数据报的
+数据负载。与面向流的的 socket 不同，DatagramChannel 可以发送单独的数据报给
+不同的目的地址。</p><p>同样，DatagramChannel 对象也可以接收来自任意地址的数据包。
+每个到达的数据报都含有关于它来自何处的信息（源地址）</p></blockquote><h4><a name='header-n247' class='md-header-anchor '></a>3.3.1 打开DatagramChannel</h4><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n248" mdtype="fences">DatagramChannel server = DatagramChannel.open();
+server.socket().bind(new InetSocketAddress(10086));
+</pre><p>此例子是打开 10086 端口接收 UDP 数据包</p><h4><a name='header-n250' class='md-header-anchor '></a>3.3.2 接收数据</h4><p>通过 receive()接收 UDP 包</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n252" mdtype="fences">ByteBuffer receiveBuffer = ByteBuffer.allocate(64);
+receiveBuffer.clear();
+SocketAddress receiveAddr = server.receive(receiveBuffer);
+</pre><p>SocketAddress 可以获得发包的 ip、端口等信息，用 toString 查看，格式如下
+/127.0.0.1:57126</p><h4><a name='header-n254' class='md-header-anchor '></a>3.3.3 发送数据</h4><p>通过 send()发送 UDP 包</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n256" mdtype="fences">DatagramChannel server = DatagramChannel.open();
+ByteBuffer sendBuffer = ByteBuffer.wrap("client send".getBytes());
+server.send(sendBuffer, new InetSocketAddress("127.0.0.1",10086));
+</pre><h4><a name='header-n257' class='md-header-anchor '></a>3.3.4 连接</h4><p>UDP 不存在真正意义上的连接，这里的连接是向特定服务地址用 read 和 write 接收
+发送数据包。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n259" mdtype="fences">client.connect(new InetSocketAddress("127.0.0.1",10086));
+int readSize= client.read(sendBuffer);
+server.write(sendBuffer);
+</pre><blockquote><p>read()和 write()只有在 connect()后才能使用，不然会抛
+NotYetConnectedException 异常。用 read()接收时，如果没有接收到包，会抛
+PortUnreachableException 异常。</p></blockquote><h4><a name='header-n262' class='md-header-anchor '></a>3.3.5 DatagramChannel示例</h4><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n263" mdtype="fences" style="break-inside: unset;">	/**
+     * DatagramChannel发包
+     * @throws Exception
+     */
+    @Test
+    public void sendDatagram() throws IOException, InterruptedException {
+        DatagramChannel sendChannel= DatagramChannel.open();
+        InetSocketAddress sendAddress= new InetSocketAddress("127.0.0.1", 9999);
+        while (true) {
+            sendChannel.send(ByteBuffer.wrap("发包数据...".getBytes("UTF-8")), sendAddress);
+            System.out.println("发包端发包");
+            Thread.sleep(1000);
+        }
+    }
+</pre><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n264" mdtype="fences" style="break-inside: unset;">	/**
+     * DatagramChannel收包
+     * @throws IOException
+     */
+    @Test
+    public void receiveDatagram() throws IOException {
+        DatagramChannel receiveChannel= DatagramChannel.open();
+        InetSocketAddress receiveAddress= new InetSocketAddress(9999);
+        receiveChannel.bind(receiveAddress);
+        ByteBuffer receiveBuffer= ByteBuffer.allocate(512);
+        while (true) {
+            receiveBuffer.clear();
+            SocketAddress sendAddress= receiveChannel.receive(receiveBuffer);
+            receiveBuffer.flip();
+            System.out.print(sendAddress.toString() + " ");
+            System.out.println(Charset.forName("UTF-8").decode(receiveBuffer));
+        }
+    }	
+</pre><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n265" mdtype="fences" style="break-inside: unset;">	/**
+     * 只接收和发送9999的数据包
+     * @throws Exception
+     */
+    @Test
+    public void test6() throws Exception{
+        DatagramChannel connChannel= DatagramChannel.open();
+        connChannel.bind(new InetSocketAddress(9999));
+        connChannel.connect(new InetSocketAddress("127.0.0.1",9999));
+        connChannel.write(ByteBuffer.wrap("发包数据...".getBytes("UTF-8")));
+        ByteBuffer readBuffer= ByteBuffer.allocate(512);
+        while (true) {
+            readBuffer.clear();
+            connChannel.read(readBuffer);
+            readBuffer.flip();
+            System.out.println(Charset.forName("UTF-8").decode(readBuffer));
+        }
+    }
+</pre><h2><a name='header-n266' class='md-header-anchor '></a>4. Buffer</h2><h3><a name='header-n267' class='md-header-anchor '></a>4.1 Buffer简介</h3><p>Java NIO 中的 Buffer 用于和 NIO 通道进行交互。数据是从通道读入缓冲区，从缓冲
+区写入到通道中的。</p><p><img src='https://img-blog.csdnimg.cn/18658388b47b481b8133b551539940f6.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><blockquote><p>缓冲区本质上是一块可以写入数据，然后可以从中读取数据的内存。这块内存被包装
+成 NIO Buffer 对象，并提供了一组方法，用来方便的访问该块内存。缓冲区实际上是
+一个容器对象，更直接的说，其实就是一个数组，在 NIO 库中，所有数据都是用缓冲
+区处理的。在读取数据时，它是直接读到缓冲区中的； 在写入数据时，它也是写入到
+缓冲区中的；任何时候访问 NIO 中的数据，都是将它放到缓冲区中。而在面向流 I/O
+系统中，所有数据都是直接写入或者直接将数据读取到 Stream 对象中。</p><p>在 NIO 中，所有的缓冲区类型都继承于抽象类 Buffer，最常用的就是 ByteBuffer，
+对于 Java 中的基本类型，基本都有一个具体 Buffer 类型与之相对应，它们之间的继
+承关系如下图所示：</p></blockquote><p><img src='https://img-blog.csdnimg.cn/0bc8e3dfb7ea4b7f96d30211fbc37fa2.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><h3><a name='header-n274' class='md-header-anchor '></a>4.2 Buffer基本使用</h3><p>1、使用 Buffer 读写数据，一般遵循以下四个步骤：</p><blockquote><p>（1）写入数据到 Buffer</p><p>（2）调用 flip()方法</p><p>（3）从 Buffer 中读取数据</p><p>（4）调用 clear()方法或者 compact()方法</p><p>当向 buffer 写入数据时，buffer 会记录下写了多少数据。一旦要读取数据，需要通过
+flip()方法将 Buffer 从写模式切换到读模式。在读模式下，可以读取之前写入到 buffer
+的所有数据。一旦读完了所有的数据，就需要清空缓冲区，让它可以再次被写入。有
+两种方式能清空缓冲区：调用 clear()或 compact()方法。clear()方法会清空整个缓冲
+区。compact()方法只会清除已经读过的数据。任何未读的数据都被移到缓冲区的起
+始处，新写入的数据将放到缓冲区未读数据的后面。</p></blockquote><h3><a name='header-n282' class='md-header-anchor '></a>4.3 Buffer的capacity、position和limit方法</h3><p>为了理解 Buffer 的工作原理，需要熟悉它的三个属性：</p><ul><li>Capacity</li><li>Position</li><li>limit
+position 和 limit 的含义取决于 Buffer 处在读模式还是写模式。不管 Buffer 处在什么
+模式，capacity 的含义总是一样的。
+这里有一个关于 capacity，position 和 limit 在读写模式中的说明：</li></ul><p><img src='https://img-blog.csdnimg.cn/a66c8527d3c9444ebc4e5e7c5b837b93.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><blockquote><p>（1）capacity
+作为一个内存块，Buffer 有一个固定的大小值，也叫“capacity”.你只能往里写
+capacity 个 byte、long，char 等类型。一旦 Buffer 满了，需要将其清空（通过读数
+据或者清除数据）才能继续写数据往里写数据。</p><p>（2）position</p><p>1）写数据到 Buffer 中时，position 表示写入数据的当前位置，position 的初始值为
+0。当一个 byte、long 等数据写到 Buffer 后， position 会向下移动到下一个可插入
+数据的 Buffer 单元。position 最大可为 capacity – 1（因为 position 的初始值为 0</p><p>2）读数据到 Buffer 中时，position 表示读入数据的当前位置，如 position=2 时表
+示已开始读入了 3 个 byte，或从第 3 个 byte 开始读取。通过 ByteBuffer.flip()切换到
+读模式时 position 会被重置为 0，当 Buffer 从 position 读入数据后，position 会下
+移到下一个可读入的数据 Buffer单元。</p><p>（3）limit</p><p>1）写数据时，limit 表示可对 Buffer 最多写入多少个数据。写模式下，limit 等于
+Buffer 的 capacity。</p><p>2）读数据时，limit 表示 Buffer 里有多少可读数据（not null 的数据），因此能读到
+之前写入的所有数据（limit 被设置成已写数据的数量，这个值在写模式下就是
+position）。</p></blockquote><h3><a name='header-n300' class='md-header-anchor '></a>4.4 Buffer的类型</h3><p>Java NIO 有以下 Buffer 类型</p><ul><li>ByteBuffer</li><li>MappedByteBuffer</li><li>CharBuffer</li><li>DoubleBuffer</li><li>FloatBuffer</li><li>IntBuffer</li><li>LongBuffer</li><li>ShortBuffer
+这些 Buffer 类型代表了不同的数据类型。换句话说，就是可以通过 char，short，int，
+long，float 或 double 类型来操作缓冲区中的字节。</li></ul><h3><a name='header-n319' class='md-header-anchor '></a>4.5 Buffer分配和写数据</h3><h4><a name='header-n320' class='md-header-anchor '></a>4.5.1 Buffer分配</h4><blockquote><p>要想获得一个 Buffer 对象首先要进行分配。 每一个 Buffer 类都有一个 allocate 方法。</p><p>下面是一个分配 48 字节 capacity 的 ByteBuffer 的例子：</p><p>ByteBuffer buf = ByteBuffer.allocate(48);</p><p>这是分配一个可存储 1024 个字符的 CharBuffer：</p><p>CharBuffer buf = CharBuffer.allocate(1024);</p></blockquote><h4><a name='header-n327' class='md-header-anchor '></a>4.5.2 向Buffer中写数据</h4><blockquote><p>写数据到 Buffer 有两种方式：</p><p>（1）从 Channel 写到 Buffer。</p><p>（2）通过 Buffer 的 put()方法写到 Buffer 里。</p><p>从 Channel 写到 Buffer 的例子：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n333" mdtype="fences">int bytesRead = inChannel.read(buf); //read into buffer.
+</pre><p>通过 put 方法写 Buffer 的例子：</p><p>buf.put(127);</p><p>put 方法有很多版本，允许你以不同的方式把数据写入到 Buffer 中。</p><p>例如， 写到一个
+指定的位置，或者把一个字节数组写入到 Buffer</p></blockquote><h4><a name='header-n338' class='md-header-anchor '></a>4.5.3 filp()方法</h4><blockquote><p>flip 方法将 Buffer 从写模式切换到读模式。调用 flip()方法会将 position 设回 0，并
+将 limit 设置成之前 position 的值。换句话说，position 现在用于标记读的位置，
+limit 表示之前写进了多少个 byte、char 等 （现在能读取多少个 byte、char等）。</p></blockquote><h3><a name='header-n341' class='md-header-anchor '></a>4.6 从Buffer中读数据</h3><blockquote><p>从 Buffer 中读取数据有两种方式：</p><p>（1）从 Buffer 读取数据到 Channel。</p><p>（2）使用 get()方法从 Buffer 中读取数据。</p><p>从 Buffer 读取数据到 Channel 的例子：</p><p>//read from buffer into channel. i</p><p>nt bytesWritten = inChannel.write(buf);</p><p>使用 get()方法从 Buffer 中读取数据的例子：</p><p>byte aByte = buf.get();</p><p>get 方法有很多版本，允许你以不同的方式从 Buffer 中读取数据。</p><p>例如，从指定
+position 读取，或者从 Buffer 中读取数据到字节数组。</p></blockquote><h3><a name='header-n353' class='md-header-anchor '></a>4.7 Buffer的几个方法</h3><h4><a name='header-n354' class='md-header-anchor '></a>4.7.1 rewind()方法</h4><blockquote><p>Buffer.rewind()将 position 设回 0，所以你可以重读 Buffer 中的所有数据。limit 保
+持不变，仍然表示能从 Buffer 中读取多少个元素（byte、char 等）</p></blockquote><h4><a name='header-n357' class='md-header-anchor '></a>4.7.2 clear()和compact()方法</h4><blockquote><p>一旦读完 Buffer 中的数据，需要让 Buffer 准备好再次被写入。可以通过 clear()或
+compact()方法来完成。</p><p>如果调用的是 clear()方法，position 将被设回 0，limit 被设置成 capacity 的值。换
+句话说，Buffer 被清空了。Buffer 中的数据并未清除，只是这些标记告诉我们可以从
+哪里开始往 Buffer 里写数据。</p><p>如果 Buffer 中有一些未读的数据，调用 clear()方法，数据将“被遗忘”，意味着不再
+有任何标记会告诉你哪些数据被读过，哪些还没有。</p><p>如果 Buffer 中仍有未读的数据，且后续还需要这些数据，但是此时想要先先写些数据，
+那么使用 compact()方法。</p><p>compact()方法将所有未读的数据拷贝到 Buffer 起始处。然后将 position 设到最后一
+个未读元素正后面。limit 属性依然像 clear()方法一样，设置成 capacity。现在
+Buffer 准备好写数据了，但是不会覆盖未读的数据。</p></blockquote><h4><a name='header-n364' class='md-header-anchor '></a>4.7.3 mark()和reset()方法</h4><blockquote><p>通过调用 Buffer.mark()方法，可以标记 Buffer 中的一个特定 position。之后可以通
+过调用 Buffer.reset()方法恢复到这个 position。例如：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n367" mdtype="fences">buffer.mark();
+//call buffer.get() a couple of times, e.g. during parsing. buffer.reset(); 
+//set position back to mark
+</pre></blockquote><h3><a name='header-n368' class='md-header-anchor '></a>4.8 缓冲区操作</h3><h4><a name='header-n369' class='md-header-anchor '></a>4.8.1 缓冲区分片</h4><blockquote><p>在 NIO 中，除了可以分配或者包装一个缓冲区对象外，还可以根据现有的缓冲区对象
+来创建一个子缓冲区，即在现有缓冲区上切出一片来作为一个新的缓冲区，但现有的
+缓冲区与创建的子缓冲区在底层数组层面上是数据共享的，也就是说，子缓冲区相当
+于是现有缓冲区的一个视图窗口。调用 slice()方法可以创建一个子缓冲区。</p></blockquote><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n372" mdtype="fences" style="break-inside: unset;">	/**
+     * 缓冲区分片
+     * @throws IOException
+     */
+    @Test
+    public void test9() throws IOException {
+        ByteBuffer buffer = ByteBuffer.allocate(10);
+        // 缓冲区中的数据 0-9
+        for (int i = 0; i &lt; buffer.capacity(); ++i) {
+            buffer.put((byte) i);
+        }
+        // 创建子缓冲区
+        buffer.position(3);
+        buffer.limit(7);
+        ByteBuffer slice = buffer.slice();
+        // 改变子缓冲区的内容
+        for (int i = 0; i &lt; slice.capacity(); ++i) {
+            byte b = slice.get(i);
+            b *= 10;
+            slice.put(i, b);
+        }
+        buffer.position(0);
+        buffer.limit(buffer.capacity());
+        while (buffer.remaining() &gt; 0) {
+            System.out.println(buffer.get());
+        }
+    }
+</pre><h4><a name='header-n373' class='md-header-anchor '></a>4.8.2 只读缓冲区</h4><blockquote><p>只读缓冲区非常简单，可以读取它们，但是不能向它们写入数据。可以通过调用缓冲
+区的 asReadOnlyBuffer()方法，将任何常规缓冲区转 换为只读缓冲区，这个方法返回
+一个与原缓冲区完全相同的缓冲区，并与原缓冲区共享数据，只不过它是只读的。如
+果原缓冲区的内容发生了变化，只读缓冲区的内容也随之发生变化：</p></blockquote><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n376" mdtype="fences" style="break-inside: unset;">	/**
+     * 只读缓冲区
+     * @throws IOException
+     */
+    @Test
+    public void test10() throws IOException {
+        ByteBuffer buffer = ByteBuffer.allocate(10);
+        // 缓冲区中的数据 0-9
+        for (int i = 0; i &lt; buffer.capacity(); ++i) {
+            buffer.put((byte) i);
+        }
+        // 创建只读缓冲区
+        ByteBuffer readonly = buffer.asReadOnlyBuffer();
+        // 改变原缓冲区的内容
+        for (int i = 0; i &lt; buffer.capacity(); ++i) {
+            byte b = buffer.get(i);
+            b *= 10;
+            buffer.put(i, b);
+        }
+        readonly.position(0);
+        readonly.limit(buffer.capacity());
+        // 只读缓冲区的内容也随之改变
+        while (readonly.remaining() &gt; 0) {
+            System.out.println(readonly.get());
+        }
+    }
+</pre><h4><a name='header-n377' class='md-header-anchor '></a>4.8.3 直接缓冲区</h4><blockquote><p>直接缓冲区是为加快 I/O 速度，使用一种特殊方式为其分配内存的缓冲区，JDK 文档
+中的描述为：给定一个直接字节缓冲区，Java 虚拟机将尽最大努力直接对它执行本机
+I/O 操作。也就是说，它会在每一次调用底层操作系统的本机 I/O 操作之前(或之后)，
+尝试避免将缓冲区的内容拷贝到一个中间缓冲区中 或者从一个中间缓冲区中拷贝数据。
+要分配直接缓冲区，需要调用 allocateDirect()方法，而不是 allocate()方法，使用方
+式与普通缓冲区并无区别。</p><p><strong>拷贝文件示例：</strong></p></blockquote><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n381" mdtype="fences" style="break-inside: unset;">	/**
+     * 直接缓冲区
+     * @throws IOException
+     */
+    @Test
+    public void test11() throws IOException {
+        String infile = "d:\\Javacode\\Javacode_1\\1.txt";
+        FileInputStream fin = new FileInputStream(infile);
+        FileChannel fcin = fin.getChannel();
+        String outfile = String.format("d:\\Javacode\\Javacode_1\\2.txt");
+        FileOutputStream fout = new FileOutputStream(outfile);
+        FileChannel fcout = fout.getChannel();
+        // 使用 allocateDirect，而不是 allocate
+        ByteBuffer buffer = ByteBuffer.allocateDirect(1024);
+        while (true) {
+            buffer.clear();
+            int r = fcin.read(buffer);
+            if (r == -1) {
+                break;
+            }
+            buffer.flip();
+            fcout.write(buffer);
+        }
+    }
+</pre><h4><a name='header-n382' class='md-header-anchor '></a>4.8.4 内存映射文件I/O</h4><blockquote><p>内存映射文件 I/O 是一种读和写文件数据的方法，它可以比常规的基于流或者基于通
+道的 I/O 快的多。内存映射文件 I/O 是通过使文件中的数据出现为 内存数组的内容来
+完成的，这其初听起来似乎不过就是将整个文件读到内存中，但是事实上并不是这样。
+一般来说，只有文件中实际读取或者写入的部分才会映射到内存中。</p><p>示例代码：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n386" mdtype="fences" style="break-inside: unset;">	/**
+     * 内存映射文件I/O
+     * @throws Exception
+     */
+    @Test
+    public void test12() throws Exception {
+        int start = 0;
+        int size = 1024;
+        RandomAccessFile raf = new RandomAccessFile("d:\\Javacode\\Javacode_1\\1.txt", "rw");
+        FileChannel fc = raf.getChannel();
+        MappedByteBuffer mbb = fc.map(FileChannel.MapMode.READ_WRITE, start, size);
+        mbb.put(0, (byte) 97);
+        mbb.put(1023, (byte) 122);
+        raf.close();
+    }
+</pre></blockquote><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n387" mdtype="fences" style="break-inside: unset;">	/**
+     * Buffer读写测试
+     * @throws Exception
+     */
+    @Test
+    public void test7() throws Exception{
+        RandomAccessFile aFile = new RandomAccessFile("d:\\Javacode\\Javacode_1\\1.txt", "rw");//获取文件
+        FileChannel inChannel = aFile.getChannel();//通过文件获取Channel通道
+        ByteBuffer buf = ByteBuffer.allocate(1024);//创建Buffer
+        int bytesRead = inChannel.read(buf);//Channel--&gt;Buffer
+        while (bytesRead != -1) {//返回-1则读取到末尾
+            /**System.out.println(bytesRead);//读取数*/
+            buf.flip();//读写转换
+            while (buf.hasRemaining()) {//循环
+                System.out.print((char) buf.get());//输出
+            }
+            buf.clear();//清除
+            bytesRead = inChannel.read(buf);//下一次读取
+        }
+        aFile.close();//文件关闭
+        System.out.println("操作结束");
+        System.out.println(bytesRead);//读取到末尾返回-1
+    }
+</pre><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n388" mdtype="fences" style="break-inside: unset;">	/**
+     * IntBuffer使用
+     * @throws Exception
+     */
+    @Test
+    public void test8() throws Exception{
+        // 分配新的 int 缓冲区，参数为缓冲区容量
+        // 新缓冲区的当前位置将为零，其界限(限制位置)将为其容量。
+        // 它将具有一个底层实现数组，其数组偏移量将为零。
+        IntBuffer buffer = IntBuffer.allocate(8);
+        for (int i = 0; i &lt; buffer.capacity(); ++i) {
+            int j = 2 * (i + 1);
+            // 将给定整数写入此缓冲区的当前位置，当前位置递增
+            buffer.put(j);
+        }
+        // 重设此缓冲区，将限制设置为当前位置，然后将当前位置设置为 0
+        buffer.flip();
+        // 查看在当前位置和限制位置之间是否有元素
+        while (buffer.hasRemaining()) {
+            // 读取此缓冲区当前位置的整数，然后当前位置递增
+            int j = buffer.get();
+            System.out.print(j + " ");
+        }
+    }
+</pre><h2><a name='header-n389' class='md-header-anchor '></a>5. Selector</h2><h3><a name='header-n390' class='md-header-anchor '></a>5.1 Selector简介</h3><h4><a name='header-n391' class='md-header-anchor '></a>5.1.1 Selector和Channel关系</h4><blockquote><p>Selector 一般称 为选择器 ，也可以翻译为 多路复用器 。它是 Java NIO 核心组件中
+的一个，用于检查一个或多个 NIO Channel（通道）的状态是否处于可读、可写。如
+此可以实现单线程管理多个 channels,也就是可以管理多个网络链接。</p></blockquote><p><img src='https://img-blog.csdnimg.cn/6c99c5050bc2464ba408b4227a6357cb.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><blockquote><p>使用 Selector 的好处在于： 使用更少的线程来就可以来处理通道了， 相比使用多个
+线程，避免了线程上下文切换带来的开销。</p></blockquote><h4><a name='header-n397' class='md-header-anchor '></a>5.1.2 可选择通道（SelectableChannel）</h4><blockquote><p>（1）不是所有的 Channel 都可以被 Selector 复用的。比方说，FileChannel 就不能
+被选择器复用。判断一个 Channel 能被 Selector 复用，有一个前提：判断他是否继承了一个抽象类 SelectableChannel。如果继承了 SelectableChannel，则可以被复
+用，否则不能。</p><p>（2）SelectableChannel 类提供了实现通道的可选择性所需要的公共方法。它是所有
+支持就绪检查的通道类的父类。所有 socket 通道，都继承了 SelectableChannel 类
+都是可选择的，包括从管道(Pipe)对象的中获得的通道。而 FileChannel 类，没有继
+承 SelectableChannel，因此是不是可选通道。</p><p>（3）一个通道可以被注册到多个选择器上，但对每个选择器而言只能被注册一次。通
+道和选择器之间的关系，使用注册的方式完成。SelectableChannel 可以被注册到
+Selector 对象上，在注册的时候，需要指定通道的哪些操作，是 Selector 感兴趣的。</p></blockquote><p><img src='https://img-blog.csdnimg.cn/5ae3f83cfcb54592b8ab997a7ca02851.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><h4><a name='header-n403' class='md-header-anchor '></a>5.1.3 Channel注册到Selector</h4><blockquote><p>（1）使用 Channel.register（Selector sel，int ops）方法，将一个通道注册到一个
+选择器时。第一个参数，指定通道要注册的选择器。第二个参数指定选择器需要查询
+的通道操作。</p><p>（2）可以供选择器查询的通道操作，从类型来分，包括以下四种：</p><ul><li>可读 : SelectionKey.OP_READ</li><li>可写 : SelectionKey.OP_WRITE</li><li>连接 : SelectionKey.OP_CONNECT</li><li>接收 : SelectionKey.OP_ACCEPT</li></ul><p>如果 Selector 对通道的多操作类型感兴趣，可以用“位或”操作符来实现：
+  比如：int key = SelectionKey.OP_READ | SelectionKey.OP_WRITE ;</p><p>（3）选择器查询的不是通道的操作，而是通道的某个操作的一种就绪状态。什么是操
+作的就绪状态？一旦通道具备完成某个操作的条件，表示该通道的某个操作已经就绪，
+就可以被 Selector 查询到，程序可以对通道进行对应的操作。</p><p>比方说，某个
+SocketChannel 通道可以连接到一个服务器，则处于“连接就绪”(OP_CONNECT)。
+再比方说，一个 ServerSocketChannel 服务器通道准备好接收新进入的连接，则处于
+“接收就绪”（OP_ACCEPT）状态。还比方说，一个有数据可读的通道，可以说是
+“读就绪”(OP_READ)。一个等待写数据的通道可以说是“写就绪”(OP_WRITE)。</p></blockquote><h4><a name='header-n419' class='md-header-anchor '></a>5.1.4 选择键（SlectionKey）</h4><blockquote><p>（1）Channel 注册到后，并且一旦通道处于某种就绪的状态，就可以被选择器查询到。
+这个工作，使用选择器 Selector 的 select（）方法完成。select 方法的作用，对感兴
+趣的通道操作，进行就绪状态的查询。</p><p>（2）Selector 可以不断的查询 Channel 中发生的操作的就绪状态。并且挑选感兴趣
+的操作就绪状态。一旦通道有操作的就绪状态达成，并且是 Selector 感兴趣的操作，
+就会被 Selector 选中，放入选择键集合中。</p><p>（3）一个选择键，首先是包含了注册在 Selector 的通道操作的类型，比方说
+SelectionKey.OP_READ。也包含了特定的通道与特定的选择器之间的注册关系。
+开发应用程序是，选择键是编程的关键。NIO 的编程，就是根据对应的选择键，进行
+不同的业务逻辑处理。</p><p>（4）选择键的概念，和事件的概念比较相似。一个选择键类似监听器模式里边的一个
+事件。由于 Selector 不是事件触发的模式，而是主动去查询的模式，所以不叫事件
+Event，而是叫 SelectionKey 选择键。</p></blockquote><h3><a name='header-n425' class='md-header-anchor '></a>5.2 Selector的使用方法</h3><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n426" mdtype="fences" style="break-inside: unset;">	/**
+     * Selector使用
+     * @throws Exception
+     */
+    @Test
+    public void test13() throws Exception {
+        //创建Selector
+        Selector selector = Selector.open();
+        //通道
+        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+        //非阻塞
+        serverSocketChannel.configureBlocking(false);
+        //绑定连接
+        serverSocketChannel.bind(new InetSocketAddress(9999));
+        //将通道注册到选择器上
+        serverSocketChannel.register(selector,SelectionKey.OP_ACCEPT);
+        //查询已经就绪的通道操作
+        Set&lt;SelectionKey&gt; selectionKeys = selector.selectedKeys();
+        //遍历
+        Iterator&lt;SelectionKey&gt; iterator = selectionKeys.iterator();
+        while (iterator.hasNext()) {
+            SelectionKey key = iterator.next();
+            //判断就绪状态操作
+            if(key.isAcceptable()) {
+                // a connection was accepted by a ServerSocketChannel.
+            } else if (key.isConnectable()) {
+                // a connection was established with a remote server.
+            } else if (key.isReadable()) {
+                // a channel is ready for reading
+            } else if (key.isWritable()) {
+                // a channel is ready for writing
+            }
+            iterator.remove();
+        }
+    }
+</pre><h4><a name='header-n427' class='md-header-anchor '></a>5.2.1 Selector的创建</h4><p>通过调用 Selector.open()方法创建一个 Selector 对象，如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n429" mdtype="fences">// 1、获取 Selector 选择器
+Selector selector = Selector.open();
+</pre><h4><a name='header-n430' class='md-header-anchor '></a>5.2.2 注册Channel到Selector</h4><p>要实现 Selector 管理 Channel，需要将 channel 注册到相应的 Selector上</p><blockquote><p>// 1、获取 Selector 选择器</p><p>Selector selector = Selector.open();</p><p>// 2、获取通道</p><p>ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();</p><p>// 3.设置为非阻塞</p><p>serverSocketChannel.configureBlocking(false);</p><p>// 4、绑定连接</p><p>serverSocketChannel.bind(new InetSocketAddress(9999));</p><p>// 5、将通道注册到选择器上,并制定监听事件为：“接收”事件</p><p>serverSocketChannel.register(selector,SelectionKey.OP_ACCEPT);</p></blockquote><blockquote><p>上面通过调用通道的 register()方法会将它注册到一个选择器上。</p><p>首先需要注意的是：</p><p>（1）与 Selector 一起使用时，Channel 必须处于非阻塞模式下，否则将抛出异常
+IllegalBlockingModeException。这意味着，FileChannel 不能与 Selector 一起使用，因
+为 FileChannel 不能切换到非阻塞模式，而套接字相关的所有的通道都可以。</p><p>（2）一个通道，并没有一定要支持所有的四种操作。比如服务器通道
+ServerSocketChannel 支持 Accept 接受操作，而 SocketChannel 客户端通道则不支持。
+可以通过通道上的 validOps()方法，来获取特定通道下所有支持的操作集合。</p></blockquote><h4><a name='header-n448' class='md-header-anchor '></a>5.2.3 轮询查询就绪操作</h4><p>（1）通过 Selector 的 select（）方法，可以查询出已经就绪的通道操作，这些就绪的
+状态集合，包存在一个元素是 SelectionKey 对象的 Set 集合中。
+（2）下面是 Selector 几个重载的查询 select()方法：</p><ul><li>select():阻塞到至少有一个通道在你注册的事件上就绪了。</li><li>select(long timeout)：和 select()一样，但最长阻塞事件为 timeout 毫秒。</li><li>selectNow():非阻塞，只要有通道就绪就立刻返回。</li></ul><p>select()方法返回的 int 值，表示有多少通道已经就绪，更准确的说，是自前一次 select
+方法以来到这一次 select 方法之间的时间段上，有多少通道变成就绪状态。</p><p>例如：首次调用 select()方法，如果有一个通道变成就绪状态，返回了 1，若再次调用
+select()方法，如果另一个通道就绪了，它会再次返回 1。如果对第一个就绪的
+channel 没有做任何操作，现在就有两个就绪的通道，但在每次 select()方法调用之间，
+只有一个通道就绪了。</p><p>一旦调用 select()方法，并且返回值不为 0 时，在 Selector 中有一个 selectedKeys()方
+法，用来访问已选择键集合，迭代集合的每一个选择键元素，根据就绪操作的类型，
+完成对应的操作：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n460" mdtype="fences" style="break-inside: unset;">Set selectedKeys = selector.selectedKeys();
+Iterator keyIterator = selectedKeys.iterator();
+while(keyIterator.hasNext()) {
+    SelectionKey key = keyIterator.next();
+    if(key.isAcceptable()) {
+        // a connection was accepted by a ServerSocketChannel. 
+    } else if (key.isConnectable()) {
+        // a connection was established with a remote server. 
+    } else if (key.isReadable()) {
+        // a channel is ready for reading
+    } else if (key.isWritable()) {
+        // a channel is ready for writing
+    }
+    keyIterator.remove();
+}
+</pre><h4><a name='header-n461' class='md-header-anchor '></a>5.3.4 停止选择的方法</h4><blockquote><p>选择器执行选择的过程，系统底层会依次询问每个通道是否已经就绪，这个过程可能
+会造成调用线程进入阻塞状态,那么我们有以下三种方式可以唤醒在 select（）方法中
+阻塞的线程。</p><p>wakeup()方法 ：通过调用 Selector 对象的 wakeup（）方法让处在阻塞状态的
+select()方法立刻返回。</p><p>该方法使得选择器上的第一个还没有返回的选择操作立即返回。如果当前没有进行中
+的选择操作，那么下一次对 select()方法的一次调用将立即返回。</p><p>close()方法 ：通过 close（）方法关闭 Selector，
+该方法使得任何一个在选择操作中阻塞的线程都被唤醒（类似 wakeup（）），同时
+使得注册到该 Selector 的所有 Channel 被注销，所有的键将被取消，但是 Channel
+本身并不会关闭。</p></blockquote><h3><a name='header-n467' class='md-header-anchor '></a>5.3 NIO编程步骤</h3><p><img src='https://img-blog.csdnimg.cn/b965d3054ee74b25852d1da8ace3020a.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><h3><a name='header-n469' class='md-header-anchor '></a>5.4 示例代码</h3><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n470" mdtype="fences" style="break-inside: unset;">	/**
+     * Selector使用：客户端
+     */
+    @Test
+    public void test14() throws Exception {
+        //获取通道，绑定主机和端口号
+        SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress("127.0.0.1",8081));
+        //切换到非阻塞模式
+        socketChannel.configureBlocking(false);
+        //创建Buffer
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        //写入Buffer数据
+        byteBuffer.put(new Date().toString().getBytes());
+        //模式切换
+        byteBuffer.flip();
+        //写入通道
+        socketChannel.write(byteBuffer);
+        //清空关闭
+        byteBuffer.clear();
+        socketChannel.close();
+    }
+</pre><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n471" mdtype="fences" style="break-inside: unset;">	/**
+     * Selector使用：服务端
+     */
+    @Test
+    public void test15() throws Exception {
+        //获取服务端通道
+        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+        //切换为非阻塞模式
+        serverSocketChannel.configureBlocking(false);
+        //创建Buffer
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        //绑定端口号
+        serverSocketChannel.bind(new InetSocketAddress(8081));
+        //获取Selector选择器
+        Selector selector = Selector.open();
+        //通道注册到选择器，进行监听
+        serverSocketChannel.register(selector,SelectionKey.OP_ACCEPT);
+        //选择器轮询，进行后续操作
+        while (selector.select()&gt;0) {
+            Set&lt;SelectionKey&gt; selectionKeys = selector.selectedKeys();
+            //遍历
+            Iterator&lt;SelectionKey&gt; iterator = selectionKeys.iterator();
+            while (iterator.hasNext()) {
+                //获取就绪操作
+                SelectionKey key = iterator.next();
+                //判断就绪状态操作
+                if(key.isAcceptable()) { //接收就绪状态
+                    // a connection was accepted by a ServerSocketChannel.
+                    //获取连接
+                    SocketChannel accept = serverSocketChannel.accept();
+                    //切换非阻塞模式
+                    accept.configureBlocking(false);
+                    //注册
+                    accept.register(selector,SelectionKey.OP_READ);
+                } else if (key.isConnectable()) {
+                    // a connection was established with a remote server.
+                } else if (key.isReadable()) { //可读就绪状态
+                    // a channel is ready for reading
+                    SocketChannel socketChannel = (SocketChannel) key.channel();
+                    //读取数据
+                    int length = 0;
+                    while ((length = socketChannel.read(byteBuffer)) &gt; 0){
+                        byteBuffer.flip();
+                        System.out.println(new String(byteBuffer.array(),0,length));
+                    }
+                    byteBuffer.clear();
+                } else if (key.isWritable()) {
+                    // a channel is ready for writing
+                }
+                iterator.remove();
+            }
+        }
+    }
+</pre><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n472" mdtype="fences" style="break-inside: unset;">	/**
+     * Selector使用：客户端交互
+     * @param args
+     */
+    public static void main(String[] args) throws Exception {
+        //获取通道，绑定主机和端口号
+        SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress("127.0.0.1",8081));
+        //切换到非阻塞模式
+        socketChannel.configureBlocking(false);
+        //创建Buffer
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        //交互
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()) {
+            String str = scanner.next();
+            //写入Buffer数据
+            byteBuffer.put((new Date().toString() + " ---&gt; " + str).getBytes());
+            //模式切换
+            byteBuffer.flip();
+            //写入通道
+            socketChannel.write(byteBuffer);
+            //清空关闭
+            byteBuffer.clear();
+        }
+        socketChannel.close();
+    }
+</pre><h2><a name='header-n473' class='md-header-anchor '></a>6. Pipe和FileLock</h2><h3><a name='header-n474' class='md-header-anchor '></a>6.1 Pipe</h3><blockquote><p>Java NIO 管道是 2 个线程之间的单向数据连接。Pipe 有一个 source 通道和一个 sink
+通道。数据会被写到 sink 通道，从 source 通道读取。</p></blockquote><p><img src='https://img-blog.csdnimg.cn/43a7a064fb2946f98bfb1c79eb15f19a.png' alt='在这里插入图片描述' referrerPolicy='no-referrer' /></p><h4><a name='header-n478' class='md-header-anchor '></a>6.1.1 创建管道</h4><p>通过 Pipe.open()方法打开管道。</p><p><code>Pipe pipe = Pipe.open();</code></p><h4><a name='header-n481' class='md-header-anchor '></a>6.1.2 写入管道</h4><p>要向管道写数据，需要访问 sink 通道：</p><p><code>Pipe.SinkChannel sinkChannel = pipe.sink()</code></p><p>通过调用 SinkChannel 的  write()方法，将数据写入 SinkChannel：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n485" mdtype="fences">String newData = "New String to write to file..." + System.currentTimeMillis();
+ByteBuffer buf = ByteBuffer.allocate(48);
+buf.clear();
+buf.put(newData.getBytes());
+buf.flip();
+while(buf.hasRemaining()) {
+    sinkChannel.write(buf);
+}
+</pre><h4><a name='header-n486' class='md-header-anchor '></a>6.1.3 从管道读取数据</h4><p>从读取管道的数据，需要访问 source 通道：</p><p><code>Pipe.SourceChannel sourceChannel = pipe.source();</code></p><p>调用 source 通道的 read()方法来读取数据：</p><p><code>ByteBuffer buf = ByteBuffer.allocate(48);</code></p><p><code>int bytesRead = sourceChannel.read(buf);</code></p><p>read()方法返回的 int 值会告诉我们多少字节被读进了缓冲区。</p><h4><a name='header-n493' class='md-header-anchor '></a>6.1.4 示例</h4><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n494" mdtype="fences" style="break-inside: unset;">	/**
+     * Pipe介绍与代码示例
+     */
+    @Test
+    public void test16() throws Exception {
+        // 1. 获取通道
+        Pipe pipe = Pipe.open();
+        // 2. 获取 sink 管道，用来传送数据
+        Pipe.SinkChannel sinkChannel = pipe.sink();
+        // 3. 申请一定大小的缓冲区
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        byteBuffer.put("测试".getBytes());
+        byteBuffer.flip();
+        // 4. sink 发送数据
+        sinkChannel.write(byteBuffer);
+        // 5. 创建接收 pipe 数据的 source 管道
+        Pipe.SourceChannel sourceChannel = pipe.source();
+        // 6. 接收数据，并保存到缓冲区中
+        ByteBuffer byteBuffer2 = ByteBuffer.allocate(1024);
+        int length = sourceChannel.read(byteBuffer2);
+        System.out.println(new String(byteBuffer2.array(), 0, length));
+        // 7. 关闭通道
+        sourceChannel.close();
+        sinkChannel.close();
+    }
+</pre><h3><a name='header-n495' class='md-header-anchor '></a>6.2 FileLock</h3><h4><a name='header-n496' class='md-header-anchor '></a>6.2.1 FileLock简介</h4><blockquote><p>文件锁在 OS 中很常见，如果多个程序同时访问、修改同一个文件，很容易因为文件
+数据不同步而出现问题。给文件加一个锁，同一时间，只能有一个程序修改此文件，
+或者程序都只能读此文件，这就解决了同步问题。</p><p>文件锁是进程级别的，不是线程级别的。文件锁可以解决多个进程并发访问、修改同
+一个文件的问题，但不能解决多线程并发访问、修改同一文件的问题。使用文件锁时，
+同一进程内的多个线程，可以同时访问、修改此文件。</p><p>文件锁是当前程序所属的 JVM 实例持有的，一旦获取到文件锁（对文件加锁），要调
+用 release()，或者关闭对应的 FileChannel 对象，或者当前 JVM 退出，才会释放这
+个锁。</p><p>一旦某个进程（比如说 JVM 实例）对某个文件加锁，则在释放这个锁之前，此进程不
+能再对此文件加锁，就是说 JVM 实例在同一文件上的文件锁是不重叠的（进程级别不
+能重复在同一文件上获取锁）。</p></blockquote><h4><a name='header-n502' class='md-header-anchor '></a>6.2.2 文件锁分类</h4><blockquote><p><strong>排它锁：</strong>又叫独占锁。对文件加排它锁后，该进程可以对此文件进行读写，该进程独
+占此文件，其他进程不能读写此文件，直到该进程释放文件锁。</p><p><strong>共享锁：</strong>某个进程对文件加共享锁，其他进程也可以访问此文件，但这些进程都只能
+读此文件，不能写。线程是安全的。只要还有一个进程持有共享锁，此文件就只能读，
+不能写。</p></blockquote><h4><a name='header-n506' class='md-header-anchor '></a>6.2.3 使用示例</h4><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n507" mdtype="fences">//创建 FileChannel 对象，文件锁只能通过 FileChannel 对象来使用
+FileChannel fileChannel=new FileOutputStream("./1.txt").getChannel();
+//对文件加锁
+FileLock lock=fileChannel.lock();
+//对此文件进行一些读写操作。
+//....... //释放锁
+lock.release();
+</pre><p>文件锁要通过 FileChannel 对象使用。</p><h4><a name='header-n509' class='md-header-anchor '></a>6.2.4 获取文件锁的方法</h4><p>有 4 种获取文件锁的方法：</p><blockquote><p>lock() //对整个文件加锁，默认为排它锁。</p><p>lock(long position, long size, booean shared) //自定义加锁方式。前 2 个参数
+指定要加锁的部分（可以只对此文件的部分内容加锁），第三个参数值指定是否是共享锁。</p><p>tryLock() //对整个文件加锁，默认为排它锁。</p><p>tryLock(long position, long size, booean shared) //自定义加锁方式。</p><p>如果指定为共享锁，则其它进程可读此文件，所有进程均不能写此文件，如果某进程
+试图对此文件进行写操作，会抛出异常。</p></blockquote><h4><a name='header-n517' class='md-header-anchor '></a>6.2.5 lock与trylock的区别</h4><blockquote><p>lock 是阻塞式的，如果未获取到文件锁，会一直阻塞当前线程，直到获取文件锁</p><p>tryLock 和 lock 的作用相同，只不过 tryLock 是非阻塞式的，tryLock 是尝试获取文
+件锁，获取成功就返回锁对象，否则返回 null，不会阻塞当前线程</p></blockquote><h4><a name='header-n521' class='md-header-anchor '></a>6.2.6 FileLock的两个方法</h4><p>boolean isShared() //此文件锁是否是共享锁</p><p>boolean isValid() //此文件锁是否还有效</p><p>在某些 OS 上，对某个文件加锁后，不能对此文件使用通道映射。</p><h4><a name='header-n525' class='md-header-anchor '></a>6.2.7 完整示例</h4><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n526" mdtype="fences" style="break-inside: unset;">public class Demo1 {
+    
+    public static void main(String[] args) throws IOException {
+        String input = "atguigu";
+        System.out.println("输入 :" + input);
+        ByteBuffer buf = ByteBuffer.wrap(input.getBytes());
+        String fp = "D:\\atguigu\\01.txt";
+        Path pt = Paths.get(fp);
+        FileChannel channel = FileChannel.open(pt, StandardOpenOption.WRITE,StandardOpenOption.APPEND);
+        channel.position(channel.size() - 1); // position of a cursor at the end offile
+            // 获得锁方法一：lock()，阻塞方法，当文件锁不可用时，当前进程会被挂起
+            //lock = channel.lock();// 无参 lock()为独占锁
+            //lock = channel.lock(0L, Long.MAX_VALUE, true);//有参 lock()为共享锁，有写操作会报异常
+            // 获得锁方法二：trylock()，非阻塞的方法，当文件锁不可用时，tryLock()会得到 null 值
+        FileLock lock = channel.tryLock(0,Long.MAX_VALUE,false);
+        System.out.println("共享锁 shared: " + lock.isShared());
+        channel.write(buf);
+        channel.close(); // Releases the Lock
+        System.out.println("写操作完成.");
+        //读取数据
+        readPrint(fp);
+    }
+    
+    public static void readPrint(String path) throws IOException {
+        FileReader filereader = new FileReader(path);
+        BufferedReader bufferedreader = new BufferedReader(filereader);
+        String tr = bufferedreader.readLine();
+        System.out.println("读取内容: ");
+        while (tr != null) {
+            System.out.println(" " + tr);
+            tr = bufferedreader.readLine();
+        }
+        filereader.close();
+        bufferedreader.close();
+    }
+    
+}
+</pre><h2><a name='header-n527' class='md-header-anchor '></a>7. 其他</h2><h3><a name='header-n528' class='md-header-anchor '></a>7.1 Path</h3><h4><a name='header-n529' class='md-header-anchor '></a>7.1.1 Path简介</h4><blockquote><p>Java Path 接口是 Java NIO 更新的一部分，同 Java NIO 一起已经包括在 Java6 和
+Java7 中。Java Path 接口是在 Java7 中添加到 Java NIO 的。Path 接口位于
+java.nio.file 包中，所以 Path 接口的完全限定名称为 java.nio.file.Path。</p><p>Java Path 实例表示文件系统中的路径。一个路径可以指向一个文件或一个目录。路径
+可以是绝对路径，也可以是相对路径。绝对路径包含从文件系统的根目录到它指向的
+文件或目录的完整路径。相对路径包含相对于其他路径的文件或目录的路径。</p><p>在许多方面，java.nio.file.Path 接口类似于 java.io.File 类，但是有一些差别。不过，
+在许多情况下，可以使用 Path 接口来替换 File 类的使用。</p></blockquote><h4><a name='header-n534' class='md-header-anchor '></a>7.1.2 创建Path实例</h4><blockquote><p>使用 java.nio.file.Path 实例必须创建一个 Path 实例。</p><p>可以使用 Paths 类
+(java.nio.file.Paths)中的静态方法 Paths.get()来创建路径实例。</p></blockquote><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n538" mdtype="fences">import java.nio.file.Path;
+import java.nio.file.Paths;
+public class PathDemo {
+    public static void main(String[] args) {
+        Path path = Paths.get("d:\\atguigu\\001.txt");
+    }
+}
+</pre><p>上述代码，可以理解为，Paths.get()方法是 Path 实例的工厂方法。</p><h4><a name='header-n540' class='md-header-anchor '></a>7.1.3 创建绝对路径</h4><p>（1）创建绝对路径，通过调用 Paths.get()方法，给定绝对路径文件作为参数来完成。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n542" mdtype="fences">Path path = Paths.get("d:\\atguigu\\001.txt");
+</pre><p>上述代码中，绝对路径是 d:\atguigu\001.txt。在 Java 字符串中， \是一个转义字符，
+需要编写\，告诉 Java 编译器在字符串中写入一个\字符。</p><p>（2）如果在 Linux、MacOS 等操作字体上，上面的绝对路径可能如下:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n545" mdtype="fences">Path path = Paths.get("/home/jakobjenkov/myfile.txt");
+</pre><p>绝对路径现在为/home/jakobjenkov/myfile.txt.</p><p>（3）如果在 Windows 机器上使用了从/开始的路径，那么路径将被解释为相对于当
+前驱动器。</p><h4><a name='header-n548' class='md-header-anchor '></a>7.1.4 创建相对路径</h4><p>Java NIO Path 类也可以用于处理相对路径。您可以使用 Paths.get(basePath, relativePath)方法创建一个相对路径。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n550" mdtype="fences">//代码 1
+Path projects = Paths.get("d:\\atguigu", "projects");
+//代码 2
+Path file = Paths.get("d:\\atguigu", "projects\\002.txt");
+</pre><p>代码 1 创建了一个 Java Path 的实例，指向路径(目录):d:\atguigu\projects</p><p>代码 2 创建了一个 Path 的实例，指向路径(文件):d:\atguigu\projects\002.txt</p><h4><a name='header-n553' class='md-header-anchor '></a>7.1.5 Path.normalize()</h4><blockquote><p>Path 接口的 normalize()方法可以使路径标准化。标准化意味着它将移除所有在路径
+字符串的中间的.和..代码，并解析路径字符串所引用的路径。</p></blockquote><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n556" mdtype="fences">String originalPath = "d:\\atguigu\\projects\\..\\yygh-project";
+Path path1 = Paths.get(originalPath);
+System.out.println("path1 = " + path1);
+Path path2 = path1.normalize();
+System.out.println("path2 = " + path2);
+</pre><h3><a name='header-n557' class='md-header-anchor '></a>7.2 Files</h3><blockquote><p>Java NIO Files 类(java.nio.file.Files)提供了几种操作文件系统中的文件的方法。</p><p>以下
+内容介绍 Java NIO Files 最常用的一些方法。</p><p>java.nio.file.Files 类与
+java.nio.file.Path 实例一起工作，因此在学习 Files 类之前，需要先了解 Path 类。</p></blockquote><h4><a name='header-n562' class='md-header-anchor '></a>7.2.1 Files.createDirectory()</h4><p>Files.createDirectory()方法，用于根据 Path 实例创建一个新目录</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n564" mdtype="fences">Path path = Paths.get("d:\\sgg");
+try {
+    Path newDir = Files.createDirectory(path);
+} catch(FileAlreadyExistsException e){
+    // 目录已经存在
+} catch (IOException e) {
+    // 其他发生的异常
+    e.printStackTrace();
+}
+</pre><blockquote><p>第一行创建表示要创建的目录的 Path 实例。在 try-catch 块中，用路径作为参数调用
+Files.createDirectory()方法。如果创建目录成功，将返回一个 Path 实例，该实例指
+向新创建的路径。</p><p>如果该目录已经存在，则是抛出一个 java.nio.file.FileAlreadyExistsException。如果
+出现其他错误，可能会抛出 IOException。例如，如果想要的新目录的父目录不存在，
+则可能会抛出 IOException。</p></blockquote><h4><a name='header-n568' class='md-header-anchor '></a>7.2.2 Files.copy()</h4><p>（1）Files.copy()方法从一个路径拷贝一个文件到另外一个目录。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n570" mdtype="fences">Path sourcePath = Paths.get("d:\\atguigu\\01.txt");
+Path destinationPath = Paths.get("d:\\atguigu\\002.txt");
+try {
+    Files.copy(sourcePath, destinationPath);
+} catch(FileAlreadyExistsException e) {
+    // 目录已经存在
+} catch (IOException e) {
+    // 其他发生的异常
+    e.printStackTrace();
+}
+</pre><blockquote><p>首先，该示例创建两个 Path 实例。然后，这个例子调用 Files.copy()，将两个 Path
+实例作为参数传递。这可以让源路径引用的文件被复制到目标路径引用的文件中。</p><p>如果目标文件已经存在，则抛出一个 java.nio.file.FileAlreadyExistsException 异常。
+如果有其他错误，则会抛出一个 IOException。例如，如果将该文件复制到不存在的
+目录，则会抛出 IOException。</p></blockquote><p>（2）覆盖已存在的文件。</p><p>Files.copy()方法的第三个参数。如果目标文件已经存在，这个参数指示 copy()方法覆
+盖现有的文件。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n576" mdtype="fences">Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+</pre><h4><a name='header-n577' class='md-header-anchor '></a>7.2.3 Files.move()</h4><p>Files.move()用于将文件从一个路径移动到另一个路径。移动文件与重命名相同，但是
+移动文件既可以移动到不同的目录，也可以在相同的操作中更改它的名称。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n579" mdtype="fences">Path sourcePath = Paths.get("d:\\atguigu\\01.txt");
+Path destinationPath = Paths.get("d:\\atguigu\\001.txt");
+try {
+    Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+} catch (IOException e) {
+    //移动文件失败
+    e.printStackTrace();
+}
+</pre><p>Files.move()的第三个参数。这个参数告诉 Files.move()方法来覆盖目标路径上的任何
+现有文件。</p><h4><a name='header-n581' class='md-header-anchor '></a>7.2.4 Files.delete()</h4><p>Files.delete()方法可以删除一个文件或者目录。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n583" mdtype="fences">Path path = Paths.get("d:\\atguigu\\001.txt");
+try {
+    Files.delete(path);
+} catch (IOException e) {
+    // 删除文件失败
+    e.printStackTrace();
+}
+</pre><p>创建指向要删除的文件的 Path。然后调用 Files.delete()方法。</p><p>如果 Files.delete()不
+能删除文件(例如，文件或目录不存在)，会抛出一个 IOException。</p><h4><a name='header-n586' class='md-header-anchor '></a>7.2.5 Files.walkFileTree()</h4><blockquote><p>（1）Files.walkFileTree()方法包含递归遍历目录树功能，将 Path 实例和 FileVisitor
+作为参数。Path 实例指向要遍历的目录，FileVisitor 在遍历期间被调用。</p><p>（2）FileVisitor 是一个接口，必须自己实现 FileVisitor 接口，并将实现的实例传递给
+walkFileTree()方法。在目录遍历过程中，您的 FileVisitor 实现的每个方法都将被调用。
+如果不需要实现所有这些方法，那么可以扩展 SimpleFileVisitor 类，它包含
+FileVisitor 接口中所有方法的默认实现。</p><p>（3）FileVisitor 接口的方法中，每个都返回一个 FileVisitResult 枚举实例。
+FileVisitResult 枚举包含以下四个选项:</p><p>CONTINUE 继续</p><p>TERMINATE 终止</p><p>SKIP_SIBLING 跳过同级</p><p>SKIP_SUBTREE 跳过子级</p><p>（4）查找一个名为 001.txt 的文件示例：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n596" mdtype="fences" style="break-inside: unset;">Path rootPath = Paths.get("d:\\atguigu");
+String fileToFind = File.separator + "001.txt";
+try {
+    Files.walkFileTree(rootPath, new SimpleFileVisitor&lt;Path&gt;() {
+        @Override
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws
+            IOException {
+            String fileString = file.toAbsolutePath().toString();
+            //System.out.println("pathString = " + fileString);
+            if(fileString.endsWith(fileToFind)){
+                System.out.println("file found at path: " + file.toAbsolutePath());
+                return FileVisitResult.TERMINATE;
+            }
+            return FileVisitResult.CONTINUE;
+        }
+    });
+} catch(IOException e){
+    e.printStackTrace();
+}
+</pre><p>（5）java.nio.file.Files 类包含许多其他的函数，有关这些方法的更多信息，请查看
+java.nio.file.Files 类的 JavaDoc。</p></blockquote><h3><a name='header-n598' class='md-header-anchor '></a>7.3 AsynchronousFileChannel</h3><blockquote><p>在 Java 7 中，Java NIO 中添加了 AsynchronousFileChannel，也就是是异步地将数
+据写入文件。</p></blockquote><h4><a name='header-n601' class='md-header-anchor '></a>7.3.1 创建AsynchronousFileChannel</h4><p>通过静态方法 open()创建。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n603" mdtype="fences">Path path = Paths.get("d:\\atguigu\\01.txt");
+try {
+    AsynchronousFileChannel fileChannel =
+        AsynchronousFileChannel.open(path, StandardOpenOption.READ);
+} catch (IOException e) {
+    e.printStackTrace();
+}
+</pre><p>open()方法的第一个参数指向与 AsynchronousFileChannel 相关联文件的 Path 实例。</p><p>第二个参数是一个或多个打开选项，它告诉 AsynchronousFileChannel 在文件上执
+行什么操作。在本例中，我们使用了 StandardOpenOption.READ 选项，表示该文件
+将被打开阅读。</p><h4><a name='header-n606' class='md-header-anchor '></a>7.3.2 通过Future读取数据</h4><p>可以通过两种方式从 AsynchronousFileChannel 读取数据。第一种方式是调用返回
+Future 的 read()方法。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n608" mdtype="fences" style="break-inside: unset;">Path path = Paths.get("d:\\atguigu\\001.txt");
+AsynchronousFileChannel fileChannel = null;
+try {
+    fileChannel = AsynchronousFileChannel.open(path, StandardOpenOption.READ);
+} catch (IOException e) {
+    e.printStackTrace();
+}
+ByteBuffer buffer = ByteBuffer.allocate(1024);
+long position = 0;
+Future&lt;Integer&gt; operation = fileChannel.read(buffer, position);
+while(!operation.isDone());
+buffer.flip();
+byte[] data = new byte[buffer.limit()];
+buffer.get(data);
+System.out.println(new String(data));
+buffer.clear();
+</pre><blockquote><p>上述代码：</p><p>（1）创建了一个 AsynchronousFileChannel，</p><p>（2）创建一个 ByteBuffer，它被传递给 read()方法作为参数，以及一个 0 的位置。</p><p>（3）在调用 read()之后，循环，直到返回的 isDone()方法返回 true。</p><p>（4）读取操作完成后，数据读取到 ByteBuffer 中，然后打印到 System.out 中。</p></blockquote><h4><a name='header-n615' class='md-header-anchor '></a>7.3.3 通过CompletionHandler读取数据</h4><p>第二种方法是调用 read()方法，该方法将一个 CompletionHandler 作为参数。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n617" mdtype="fences" style="break-inside: unset;">Path path = Paths.get("d:\\atguigu\\001.txt");
+AsynchronousFileChannel fileChannel = null;
+try {
+    fileChannel = AsynchronousFileChannel.open(path, StandardOpenOption.READ);
+} catch (IOException e) {
+    e.printStackTrace();
+}
+ByteBuffer buffer = ByteBuffer.allocate(1024);
+long position = 0;
+fileChannel.read(buffer, position, buffer, new CompletionHandler&lt;Integer, ByteBuffer&gt;() {
+    @Override
+    public void completed(Integer result, ByteBuffer attachment) {
+        System.out.println("result = " + result);
+        attachment.flip();
+        byte[] data = new byte[attachment.limit()];
+        attachment.get(data);
+        System.out.println(new String(data));
+        attachment.clear();
+    }
+    @Override
+    public void failed(Throwable exc, ByteBuffer attachment) {
+    }
+});
+</pre><blockquote><p>（1）读取操作完成，将调用 CompletionHandler 的 completed()方法。</p><p>（2）对于 completed()方法的参数传递一个整数，它告诉我们读取了多少字节，以及
+传递给 read()方法的“附件”。“附件”是 read()方法的第三个参数。在本代码中，
+它是 ByteBuffer，数据也被读取。</p><p>（3）如果读取操作失败，则将调用 CompletionHandler 的 failed()方法。</p></blockquote><h4><a name='header-n622' class='md-header-anchor '></a>7.3.4 通过Future写入数据</h4><p>和读取一样，可以通过两种方式将数据写入一个 AsynchronousFileChannel。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n624" mdtype="fences" style="break-inside: unset;">Path path = Paths.get("d:\\atguigu\\001.txt");
+AsynchronousFileChannel fileChannel = null;
+try {
+    fileChannel = AsynchronousFileChannel.open(path, StandardOpenOption.WRITE);
+} catch (IOException e) {
+    e.printStackTrace();
+}
+ByteBuffer buffer = ByteBuffer.allocate(1024);
+long position = 0;
+buffer.put("atguigu data".getBytes());
+buffer.flip();
+Future&lt;Integer&gt; operation = fileChannel.write(buffer, position);
+buffer.clear();
+while(!operation.isDone());
+System.out.println("Write over")
+</pre><blockquote><p>首先，AsynchronousFileChannel 以写模式打开。然后创建一个 ByteBuffer，并将
+一些数据写入其中。然后，ByteBuffer 中的数据被写入到文件中。最后，示例检查返
+回的 Future，以查看写操作完成时的情况。</p><p>注意，文件必须已经存在。如果该文件不存在，那么 write()方法将抛出一个
+java.nio.file.NoSuchFileException。</p></blockquote><h4><a name='header-n628' class='md-header-anchor '></a>7.3.5 通过CompletionHander写入数据</h4><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n629" mdtype="fences" style="break-inside: unset;">Path path = Paths.get("d:\\atguigu\\001.txt");
+if(!Files.exists(path)){
+    try {
+        Files.createFile(path);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+AsynchronousFileChannel fileChannel = null;
+try {
+    fileChannel = AsynchronousFileChannel.open(path, StandardOpenOption.WRITE);
+} catch (IOException e) {
+    e.printStackTrace();
+}
+ByteBuffer buffer = ByteBuffer.allocate(1024);
+long position = 0;
+buffer.put("atguigu data".getBytes());
+buffer.flip();
+fileChannel.write(buffer, position, buffer, new CompletionHandler&lt;Integer, ByteBuffer&gt;() {
+    @Override
+    public void completed(Integer result, ByteBuffer attachment) {
+        System.out.println("bytes written: " + result);
+    }
+    @Override
+    public void failed(Throwable exc, ByteBuffer attachment) {
+        System.out.println("Write failed");
+        exc.printStackTrace();
+    }
+});
+</pre><p>当写操作完成时，将会调用 CompletionHandler 的 completed()方法。如果写失败，
+则会调用 failed()方法。</p><h3><a name='header-n631' class='md-header-anchor '></a>7.4 字符集（Charset）</h3><p>java 中使用 Charset 来表示字符集编码对象。</p><p><strong>Charset 常用静态方法</strong></p><blockquote><ul><li>public static Charset forName(String charsetName)//通过编码类型获得 Charset 对
+象</li><li>public static SortedMap availableCharsets()//获得系统支持的所有
+编码方式</li><li>public static Charset defaultCharset()//获得虚拟机默认的编码方式</li><li>public static boolean isSupported(String charsetName)//判断是否支持该编码类型</li></ul></blockquote><p><strong>Charset 常用普通方法</strong></p><blockquote><ul><li>public final String name()//获得 Charset 对象的编码类型(String)</li><li>public abstract CharsetEncoder newEncoder()//获得编码器对象</li><li>public abstract CharsetDecoder newDecoder()//获得解码器对象</li></ul></blockquote><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n653" mdtype="fences" style="break-inside: unset;">@Test
+public void charSetEncoderAndDecoder() throwsCharacterCodingException {
+    
+    Charset charset=Charset.forName("UTF-8");
+    
+    //1.获取编码器
+    CharsetEncoder charsetEncoder=charset.newEncoder();
+    
+    //2.获取解码器
+    CharsetDecoder charsetDecoder=charset.newDecoder();
+    
+    //3.获取需要解码编码的数据
+    CharBuffer charBuffer=CharBuffer.allocate(1024);
+    charBuffer.put("字符集编码解码");
+    charBuffer.flip();
+    
+    //4.编码
+    ByteBuffer byteBuffer=charsetEncoder.encode(charBuffer);
+    System.out.println("编码后：");
+    for (int i=0;i&lt;byteBuffer.limit();i++) {
+        System.out.println(byteBuffer.get());
+    }
+    
+    //5.解码
+    byteBuffer.flip();
+    CharBuffer charBuffer1=charsetDecoder.decode(byteBuffer);
+    System.out.println("解码后：");
+    System.out.println(charBuffer1.toString());
+    System.out.println("指定其他格式解码:");
+    Charset charset1=Charset.forName("GBK");
+    byteBuffer.flip();
+    CharBuffer charBuffer2 =charset1.decode(byteBuffer);
+    System.out.println(charBuffer2.toString());
+    
+    //6.获取 Charset 所支持的字符编码
+    Map&lt;String ,Charset&gt; map= Charset.availableCharsets();
+    Set&lt;Map.Entry&lt;String,Charset&gt;&gt; set=map.entrySet();
+    for (Map.Entry&lt;String,Charset&gt; entry: set) {
+        System.out.println(entry.getKey()+"="+entry.getValue().toString());
+    }
+    
+}
+</pre><p>&nbsp;</p><h2><a name='header-n655' class='md-header-anchor '></a>8. NIO综合案例（多人聊天室功能）</h2><h3><a name='header-n656' class='md-header-anchor '></a>8.1 服务端代码</h3><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n657" mdtype="fences" style="break-inside: unset;">//服务器端
+public class ChatServer {
+    
+    //服务器端启动的方法
+    public void startServer() throws IOException {
+        //1 创建 Selector 选择器
+        Selector selector = Selector.open();
+        //2 创建 ServerSocketChannel 通道
+        ServerSocketChannel serverSocketChannel =
+            ServerSocketChannel.open();
+        //3 为 channel 通道绑定监听端口
+        serverSocketChannel.bind(new InetSocketAddress(8000));
+        //设置非阻塞模式
+        serverSocketChannel.configureBlocking(false);
+        //4 把 channel 通道注册到 selector 选择器上
+        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+        System.out.println("服务器已经启动成功了");
+        //5 循环，等待有新链接接入
+        //while(true)
+        for(;;) {
+            //获取 channel 数量
+            int readChannels = selector.select();
+            if(readChannels == 0) {
+                continue;
+            }
+            //获取可用的 channel
+            Set&lt;SelectionKey&gt; selectionKeys = selector.selectedKeys();
+            //遍历集合
+            Iterator&lt;SelectionKey&gt; iterator = selectionKeys.iterator();
+            while (iterator.hasNext()) {
+                SelectionKey selectionKey = iterator.next();
+                //移除 set 集合当前 selectionKey
+                iterator.remove();
+                //6 根据就绪状态，调用对应方法实现具体业务操作
+                //6.1 如果 accept 状态
+                if(selectionKey.isAcceptable()) {
+                    acceptOperator(serverSocketChannel,selector);
+                }
+                //6.2 如果可读状态
+                if(selectionKey.isReadable()) {
+                    readOperator(selector,selectionKey);
+                }
+            }
+        }
+    }
+    
+    //处理可读状态操作
+    private void readOperator(Selector selector, SelectionKey selectionKey)
+        throws IOException {
+        //1 从 SelectionKey 获取到已经就绪的通道
+        SocketChannel socketChannel =
+            (SocketChannel)selectionKey.channel();
+        //2 创建 buffer
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        //3 循环读取客户端消息
+        int readLength = socketChannel.read(byteBuffer);
+        String message = "";
+        if(readLength &gt;0) {
+            //切换读模式
+            byteBuffer.flip();
+            //读取内容
+            message += Charset.forName("UTF-8").decode(byteBuffer);
+        }
+        //4 将 channel 再次注册到选择器上，监听可读状态
+        socketChannel.register(selector,SelectionKey.OP_READ);
+        //5 把客户端发送消息，广播到其他客户端
+        if(message.length()&gt;0) {
+            //广播给其他客户端
+            System.out.println(message);
+            castOtherClient(message,selector,socketChannel);
+        }
+    }
+    
+    //广播到其他客户端
+    private void castOtherClient(String message, Selector selector, SocketChannel socketChannel) throws IOException {
+        //1 获取所有已经接入 channel
+        Set&lt;SelectionKey&gt; selectionKeySet = selector.keys();
+        //2 循环想所有 channel 广播消息
+        for(SelectionKey selectionKey : selectionKeySet) {
+            //获取每个 channel
+            Channel tarChannel = selectionKey.channel();
+            //不需要给自己发送
+            if(tarChannel instanceof SocketChannel &amp;&amp; tarChannel !=
+               socketChannel) {
+                ((SocketChannel)tarChannel).write(Charset.forName("UTF- 8").encode(message));
+            }
+        }
+    }
+    
+    //处理接入状态操作
+    private void acceptOperator(ServerSocketChannel serverSocketChannel, Selector selector) throws IOException {
+        //1 接入状态，创建 socketChannel
+        SocketChannel socketChannel = serverSocketChannel.accept();
+        //2 把 socketChannel 设置非阻塞模式
+        socketChannel.configureBlocking(false);
+        //3 把 channel 注册到 selector 选择器上，监听可读状态
+        socketChannel.register(selector,SelectionKey.OP_READ);
+        //4 客户端回复信息
+        socketChannel.write(Charset.forName("UTF-8")
+                            .encode("欢迎进入聊天室，请注意隐私安全"));
+    }
+    
+    //启动主方法
+    public static void main(String[] args) {
+        try {
+            new ChatServer().startServer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+}
+</pre><p>&nbsp;</p><h3><a name='header-n659' class='md-header-anchor '></a>8.2 客户端代码</h3><h4><a name='header-n660' class='md-header-anchor '></a>8.2.1 ChatClient类</h4><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n661" mdtype="fences" style="break-inside: unset;">//客户端
+public class ChatClient {
+    
+    //启动客户端方法
+    public void startClient(String name) throws IOException {
+        //连接服务端
+        SocketChannel socketChannel =
+            SocketChannel.open(new InetSocketAddress("127.0.0.1",8000));
+        //接收服务端响应数据
+        Selector selector = Selector.open();
+        socketChannel.configureBlocking(false);
+        socketChannel.register(selector, SelectionKey.OP_READ);
+        //创建线程
+        new Thread(new ClientThread(selector)).start();
+        //向服务器端发送消息
+        Scanner scanner = new Scanner(System.in);
+        while(scanner.hasNextLine()) {
+            String msg = scanner.nextLine();
+            if(msg.length()&gt;0) {
+                socketChannel.write(Charset.forName("UTF-8").encode(name +" : " +msg));
+            }
+        }
+    }
+    
+}
+</pre><h4><a name='header-n662' class='md-header-anchor '></a>8.2.2 ClientThread类</h4><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="java" contenteditable="false" cid="n663" mdtype="fences" style="break-inside: unset;">public class ClientThread implements Runnable {
+    
+    private Selector selector;
+    
+    public ClientThread(Selector selector) {
+        this.selector = selector;
+    }
+    
+    @Override
+    public void run() {
+        try {
+            for(;;) {
+                //获取 channel 数量
+                int readChannels = selector.select();
+                if(readChannels == 0) {
+                    continue;
+                }
+                //获取可用的 channel
+                Set&lt;SelectionKey&gt; selectionKeys = selector.selectedKeys();
+                //遍历集合
+                Iterator&lt;SelectionKey&gt; iterator = selectionKeys.iterator();
+                while (iterator.hasNext()) {
+                    SelectionKey selectionKey = iterator.next();
+                    //移除 set 集合当前 selectionKey
+                    iterator.remove();
+                    //如果可读状态
+                    if(selectionKey.isReadable()) {
+                        readOperator(selector,selectionKey);
+                    }
+                }
+            }
+        }catch(Exception e) {
+        }
+    }
+    
+    //处理可读状态操作
+    private void readOperator(Selector selector, SelectionKey selectionKey)
+        throws IOException {
+        //1 从 SelectionKey 获取到已经就绪的通道
+        SocketChannel socketChannel =
+            (SocketChannel)selectionKey.channel();
+        //2 创建 buffer
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        //3 循环读取客户端消息
+        int readLength = socketChannel.read(byteBuffer);
+        String message = "";
+        if(readLength &gt;0) {
+            //切换读模式
+            byteBuffer.flip();
+            //读取内容
+            message += Charset.forName("UTF-8").decode(byteBuffer);
+        }
+        //4 将 channel 再次注册到选择器上，监听可读状态
+        socketChannel.register(selector,SelectionKey.OP_READ);
+        //5 把客户端发送消息，广播到其他客户端
+        if(message.length()&gt;0) {
+            //广播给其他客户端
+            System.out.println(message);
+        }
+    }
+    
+}
+</pre><p>&nbsp;</p><h2><a name='header-n665' class='md-header-anchor '></a>9. 后会有期</h2><blockquote><p>路漫漫其修远兮，吾将上下而求索</p><p>纸上得来终觉浅，绝知此事要躬行</p></blockquote></div>
+</body>
+</html>
